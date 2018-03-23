@@ -10,7 +10,7 @@ use App\Material;
 
 class IndexController extends Controller
 {
-    var $count = "60";
+    var $count = "50";
     var $token = "e24083c01eb68fb4eac1540128ff9bcf180cbbb01f2f790bbbf4331e83f05661f9ab60faddd5186b5ffb4";
     var $apiVersion = "5.52";
     var $domains = array('igromania', 'vinevinevine', 'bestad', 'igm', 'mrzlk', 'countryballs_re');   // 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
