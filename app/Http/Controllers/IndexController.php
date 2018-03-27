@@ -16,6 +16,10 @@ class IndexController extends Controller
     var $apiVersion = "5.52";
     var $domains = array('igromania', 'vinevinevine', 'bestad', 'igm', 'mrzlk', 'countryballs_re');   // 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
 
+    var $TelegramToken = "562258307:AAF7ljfH87V1jhZ4jGonaLJZfcxdMG41vSs";
+
+
+
 //ФУНКЦИЯ ЗАПРОСА К API ВКОНТАКТЕ
     function getInfo($method, $params)
     {
@@ -168,6 +172,35 @@ class IndexController extends Controller
 
     }
 
+    function getTelegramInfo($method, $params)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, "https://api.telegram.org/bot$this->TelegramToken/$method?".http_build_query($params));
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $info = json_decode($result);
+    }
+
+
+    function sendTelegramMessage($method,$type,$url){
+        $params = [
+            'chat_id' => '404022092',
+            $type => $url
+            ];
+        dump($this->getTelegramInfo($method,$params));
+
+    }
+
+
+
+
+
+
+
+
 //СОХРАНЕНИЕ ЭЛЕМЕНТОВ ПОСТА
 
     public function save($id)
@@ -181,11 +214,17 @@ class IndexController extends Controller
         foreach ($info as $array) {
             if ($array->type == "photo") {
                 $i++;
-                $content = file_get_contents($array->link);
-                file_put_contents("C:\Users\Администратор\Desktop\photos\ " . $post_id . "-" . $i . ".jpg", $content);
+
+                $this->sendTelegramMessage('sendPhoto','photo',$array->link);
+
+                
+                $content = file_get_contents($array->link);file_put_contents("C:\Users\Администратор\Desktop\photos\ " . $post_id . "-" . $i . ".jpg", $content);
             }
             if ($array->type == "doc") {
                 $i++;
+
+                $this->sendTelegramMessage('sendDocument','document',$array->link);
+
                 $content = file_get_contents($array->link);
                 file_put_contents("C:\Users\Администратор\Desktop\docs\ " . $post_id . "-" . $i . ".gif", $content);
             }
@@ -195,6 +234,9 @@ class IndexController extends Controller
                 $nachPosURL = strpos($contentBox, "https://cs");
                 $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
                 $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
+
+                $this->sendTelegramMessage('sendVideo','video',$array->link);
+
                 $content = file_get_contents($URL_string);
                 file_put_contents("C:\Users\Администратор\Desktop\docs\ " . $post_id . "-" . $i . ".mp4", $content);
             }
