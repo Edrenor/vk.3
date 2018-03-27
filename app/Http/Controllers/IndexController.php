@@ -187,9 +187,10 @@ class IndexController extends Controller
 
     function sendTelegramMessage($method,$type,$url){
         $params = [
-            'chat_id' => '404022092',
+            'chat_id' => '404022092', //чат с лехой 185706999, мой чат 404022092
             $type => $url
             ];
+        dump($this->getTelegramInfo('getUpdates',[]));
         dump($this->getTelegramInfo($method,$params));
 
     }
@@ -218,7 +219,7 @@ class IndexController extends Controller
                 $this->sendTelegramMessage('sendPhoto','photo',$array->link);
 
                 
-                $content = file_get_contents($array->link);file_put_contents("C:\Users\Администратор\Desktop\photos\ " . $post_id . "-" . $i . ".jpg", $content);
+                $content = file_get_contents($array->link);file_put_contents("C:\Users\PHEX\Desktop\photos\ " . $post_id . "-" . $i . ".jpg", $content);
             }
             if ($array->type == "doc") {
                 $i++;
@@ -226,7 +227,7 @@ class IndexController extends Controller
                 $this->sendTelegramMessage('sendDocument','document',$array->link);
 
                 $content = file_get_contents($array->link);
-                file_put_contents("C:\Users\Администратор\Desktop\docs\ " . $post_id . "-" . $i . ".gif", $content);
+                file_put_contents("C:\Users\PHEX\Desktop\docs\ " . $post_id . "-" . $i . ".gif", $content);
             }
             if ($array->type == "video") {
                 $i++;
@@ -238,7 +239,7 @@ class IndexController extends Controller
                 $this->sendTelegramMessage('sendVideo','video',$array->link);
 
                 $content = file_get_contents($URL_string);
-                file_put_contents("C:\Users\Администратор\Desktop\docs\ " . $post_id . "-" . $i . ".mp4", $content);
+                file_put_contents("C:\Users\PHEX\Desktop\docs\ " . $post_id . "-" . $i . ".mp4", $content);
             }
         }
         echo("Спизжено!");
