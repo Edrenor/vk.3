@@ -206,17 +206,23 @@ class IndexController extends Controller
 
     public function save($id)
     {
-        $post_id = $id;
+        $post_id = $id;        
         $info = Material::where([
                 ['post_id', $post_id]
             ])->get();
         $i = 0;
+        $mediaArray = array();
+
+
         //dump($info);
         foreach ($info as $array) {
+            $subArray = array();
+
             if ($array->type == "photo") {
                 $i++;
 
-                $this->sendTelegramMessage('sendPhoto','photo',$array->link);
+                $subArray['type'] = 'photo';
+                $subArray['media'] = $array->link;
 
                 
                 $content = file_get_contents($array->link);file_put_contents("C:\Users\PHEX\Desktop\photos\ " . $post_id . "-" . $i . ".jpg", $content);
@@ -224,7 +230,9 @@ class IndexController extends Controller
             if ($array->type == "doc") {
                 $i++;
 
-                $this->sendTelegramMessage('sendDocument','document',$array->link);
+
+                $subArray['type'] = 'document';
+                $subArray['media'] = $array->link;
 
                 $content = file_get_contents($array->link);
                 file_put_contents("C:\Users\PHEX\Desktop\docs\ " . $post_id . "-" . $i . ".gif", $content);
@@ -236,12 +244,24 @@ class IndexController extends Controller
                 $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
                 $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
 
-                $this->sendTelegramMessage('sendVideo','video',$array->link);
+                $subArray['type'] = 'video';
+                $subArray['media'] = $array->link;
 
                 $content = file_get_contents($URL_string);
                 file_put_contents("C:\Users\PHEX\Desktop\docs\ " . $post_id . "-" . $i . ".mp4", $content);
             }
+
+            $mediaArray[] = $subArray;            
         }
+        $params = [
+            'chat_id' => '-1001329091680.0', //чат с лехой 185706999, мой чат 404022092
+            'media' => json_encode($mediaArray)
+            ];
+
+        dump($mediaArray);
+        dump($params);
+        dump($this->getTelegramInfo('sendMediagroup',$params));
+        
         echo("Спизжено!");
     }
 
