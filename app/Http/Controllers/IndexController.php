@@ -187,7 +187,7 @@ class IndexController extends Controller
 
     function sendTelegramMessage($method,$type,$url){
         $params = [
-            'chat_id' => '404022092', //чат с лехой 185706999, мой чат 404022092
+            'chat_id' => '-1001329091680', //чат с лехой 185706999, мой чат 404022092 , чат группы -1001329091680
             $type => $url
             ];
         dump($this->getTelegramInfo('getUpdates',[]));
@@ -215,6 +215,10 @@ class IndexController extends Controller
 
 
         //dump($info);
+
+
+        $data = json_decode(file_get_contents('php://input')); // получаем JSON
+
         foreach ($info as $array) {
             $subArray = array();
 
