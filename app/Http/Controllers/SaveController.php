@@ -9,6 +9,8 @@ use App\Material;
 class SaveController extends Controller
 {
 	var $TelegramToken = "562258307:AAF7ljfH87V1jhZ4jGonaLJZfcxdMG41vSs";
+    var $chat_id = '404022092';//чат с лехой 185706999, мой чат 404022092, чаит группы -1001329091680.0
+    var $theWay = 'C:\Users\PHEX\Desktop\docs\ ';
 
 function getTelegramInfo($method, $params)
     {
@@ -60,43 +62,63 @@ function getTelegramInfo($method, $params)
                 $subArray['media'] = $array->link;
 
                 
-                $content = file_get_contents($array->link);file_put_contents("C:\Users\администратор\Desktop\photos\ " . $post_id . "-" . $i . ".jpg", $content);
+                $content = file_get_contents($array->link);file_put_contents($this->theWay . $post_id . "-" . $i . ".jpg", $content);
             }
             if ($array->type == "doc") {
                 $i++;
 
-
-                $subArray['type'] = 'document';
-                $subArray['media'] = $array->link;
+                $docParams = [
+                    'chat_id' => $this->chat_id,
+                    'document' => $array->link
+                ];
+                $this->getTelegramInfo('sendDocument',$docParams);
 
                 $content = file_get_contents($array->link);
-                file_put_contents("C:\Users\PHEX\Desktop\docs\ " . $post_id . "-" . $i . ".gif", $content);
+                file_put_contents($this->theWay . $post_id . "-" . $i . ".gif", $content);
             }
+
+
             if ($array->type == "video") {
                 $i++;
                 $contentBox = file_get_contents($array->link);
+
+                dump($array->link);
+
+                $videoParams = [
+                    'chat_id' => $this->chat_id,
+                    'video' => $URL_string
+                ];
+                dump($this->getTelegramInfo('sendvideo',$videoParams) );
+
                 $nachPosURL = strpos($contentBox, "https://cs");
                 $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
                 $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
 
+                dump($URL_string);
+
                 $subArray['type'] = 'video';
-                $subArray['media'] = $array->link;
+                $subArray['media'] = $URL_string;
 
                 $content = file_get_contents($URL_string);
-                file_put_contents("C:\Users\PHEX\Desktop\docs\ " . $post_id . "-" . $i . ".mp4", $content);
+                file_put_contents($this->theWay . $post_id . "-" . $i . ".mp4", $content);
             }
 
             $mediaArray[] = $subArray;            
         }
+
+
+
         $params = [
-            'chat_id' => '404022092', //чат с лехой 185706999, мой чат , чаит группы -1001329091680.0
+            'chat_id' => $this->chat_id,
             'media' => json_encode($mediaArray)
             ];
 
-        dump($mediaArray);
-        dump($params);
-        dump($this->getTelegramInfo('sendMediagroup',$params));
+        //dump($mediaArray);
+        //dump($params);
+        if ($params['media'] !== '[[]]' ){
+            dump($this->getTelegramInfo('sendMediagroup',$params));
+        }
         
-        echo("Спизжено!");
+        //echo("Спизжено!");
     }
 }
