@@ -12,4 +12,4 @@
 */
 
 Route::get('/', 'IndexController@index');
-Route::get('/post/{id}', 'IndexController@save')->name('postSave');
+Route::get('/post/{id}', 'SaveController@save')->name('postSave');
