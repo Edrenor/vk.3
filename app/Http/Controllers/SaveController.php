@@ -2,123 +2,141 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Post;
-use App\Material;
+use App\Domain\_Traits\TgTrait;
+use App\Domain\Material\Commands\SendDocMaterialsToTg;
+use App\Domain\Material\Commands\SendMediaGroupMaterialsToTg;
+use App\Domain\Material\Queries\MaterialListByPosId;
 
+/**
+ * Class SaveController
+ *
+ * @package App\Http\Controllers
+ */
 class SaveController extends Controller
 {
-	var $TelegramToken = "562258307:AAF7ljfH87V1jhZ4jGonaLJZfcxdMG41vSs";
-    var $chat_id = '404022092';//чат с лехой 185706999, мой чат 404022092, чаит группы -1001329091680.0
-    var $theWay = 'C:\Users\PHEX\Desktop\docs\ ';
 
-function getTelegramInfo($method, $params)
+    use TgTrait;
+    /**
+     * @var array|false|null|string
+     */
+    var $token = null;
+    /**
+     * @var array|false|null|string
+     */
+    var $TelegramToken = null;
+    /**
+     * @var array|false|null|string
+     */
+    var $apiVersion = null;
+    /**
+     * @var string
+     */
+    var $chat_id = '-1001329091680.0';//чат с лехой 185706999, мой чат 404022092, чаит группы -1001329091680.0
+    /**
+     * @var null|string
+     */
+    var $theWay = null;
+    /**
+     * IndexController constructor.
+     */
+    public function __construct()
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, "https://api.telegram.org/bot$this->TelegramToken/$method?".http_build_query($params));
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        return $info = json_decode($result);
+        $this->TelegramToken = getenv('TelegramToken');
+        $this->token         = getenv('VkToken');
+        $this->apiVersion    = getenv('ApiVkVersion');
+        $this->theWay        = storage_path('app/attachments/');
     }
 
-
-    function sendTelegramMessage($method,$type,$url){
+    /**
+     * @param $method
+     * @param $type
+     * @param $url
+     */
+    function sendTelegramMessage($method, $type, $url)
+    {
         $params = [
             'chat_id' => '404022092', //чат с лехой 185706999, мой чат 404022092 , чат группы -1001329091680
-            $type => $url
-            ];
-        dump($this->getTelegramInfo('getUpdates',[]));
-        dump($this->getTelegramInfo($method,$params));
-
+            $type     => $url
+        ];
+        dump($this->getTelegramInfo('getUpdates', []));
+        dump($this->getTelegramInfo($method, $params));
     }
 
-
 //СОХРАНЕНИЕ ЭЛЕМЕНТОВ ПОСТА
+
+    /**
+     * @param $id
+     */
     public function save($id)
     {
-        $post_id = $id;        
-        $info = Material::where([
-                ['post_id', $post_id]
-            ])->get();
-        $i = 0;
-        $mediaArray = array();
+        $post_id     = $id;
+        $info        = $this->dispatch(new MaterialListByPosId($post_id));
+        $sortByTypes = $this->sortByTypes($info);
 
+        foreach ($sortByTypes as $key_type => $type) {
+            if (count($type) != 0) {
+                if ($key_type == "photo") {
+                    $this->dispatch(new SendMediaGroupMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
+                }
+                if ($key_type == "doc") {
+                    $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
+                }
+                if ($key_type == "video") {
+//                    $i++;
+//                    $contentBox = file_get_contents($array->link);
+//
+//                    dump($array->link);
+//
+//                    $videoParams = [
+//                        'chat_id' => $this->chat_id,
+//                        'video'   => $URL_string
+//                    ];
+//                    dump($this->getTelegramInfo('sendvideo', $videoParams));
+//
+//                    $nachPosURL = strpos($contentBox, "https://cs");
+//                    $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
+//                    $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
+//
+//                    dump($URL_string);
+//
+//                    $subArray['type']  = 'video';
+//                    $subArray['media'] = $URL_string;
+//
+//                    $content = file_get_contents($URL_string);
+//                    file_put_contents($this->theWay . $post_id . "-" . $i . ".mp4", $content);
+                }
+            }
+        }
+        dd(session('send_tg'));
+    }
 
-        //dump($info);
-
-
-        $data = json_decode(file_get_contents('php://input')); // получаем JSON
-
+    /**
+     * @param $info
+     *
+     * @return array
+     */
+    public function sortByTypes($info)
+    {
+        $sortByTypes = [
+            'photo' => [],
+            'video' => [],
+            'doc'   => [],
+        ];
         foreach ($info as $array) {
-            $subArray = array();
-
-            if ($array->type == "photo") {
-                $i++;
-
-                $subArray['type'] = 'photo';
-                $subArray['media'] = $array->link;
-
-                
-                $content = file_get_contents($array->link);file_put_contents($this->theWay . $post_id . "-" . $i . ".jpg", $content);
+            switch ($array->type) {
+                case "photo":
+                    $sortByTypes['photo'][] = $array;
+                    break;
+                case "video":
+                    $sortByTypes['video'][] = $array;
+                    sleep(1);
+                    break;
+                case "doc":
+                    $sortByTypes['doc'][] = $array;
+                    break;
             }
-            if ($array->type == "doc") {
-                $i++;
-
-                $docParams = [
-                    'chat_id' => $this->chat_id,
-                    'document' => $array->link
-                ];
-                $this->getTelegramInfo('sendDocument',$docParams);
-
-                $content = file_get_contents($array->link);
-                file_put_contents($this->theWay . $post_id . "-" . $i . ".gif", $content);
-            }
-
-
-            if ($array->type == "video") {
-                $i++;
-                $contentBox = file_get_contents($array->link);
-
-                dump($array->link);
-
-                $videoParams = [
-                    'chat_id' => $this->chat_id,
-                    'video' => $URL_string
-                ];
-                dump($this->getTelegramInfo('sendvideo',$videoParams) );
-
-                $nachPosURL = strpos($contentBox, "https://cs");
-                $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
-                $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
-
-                dump($URL_string);
-
-                $subArray['type'] = 'video';
-                $subArray['media'] = $URL_string;
-
-                $content = file_get_contents($URL_string);
-                file_put_contents($this->theWay . $post_id . "-" . $i . ".mp4", $content);
-            }
-
-            $mediaArray[] = $subArray;            
         }
 
-
-
-        $params = [
-            'chat_id' => $this->chat_id,
-            'media' => json_encode($mediaArray)
-            ];
-
-        //dump($mediaArray);
-        //dump($params);
-        if ($params['media'] !== '[[]]' ){
-            dump($this->getTelegramInfo('sendMediagroup',$params));
-        }
-        
-        //echo("Спизжено!");
+        return $sortByTypes;
     }
 }
