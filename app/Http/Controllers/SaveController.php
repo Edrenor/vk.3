@@ -82,28 +82,33 @@ class SaveController extends Controller
                     $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
-//                    $i++;
-//                    $contentBox = file_get_contents($array->link);
-//
-//                    dump($array->link);
-//
+                    dump($type);
+                    //$i++;
+                    $contentBox = file_get_contents($type['0']->link);
+
 //                    $videoParams = [
 //                        'chat_id' => $this->chat_id,
 //                        'video'   => $URL_string
 //                    ];
 //                    dump($this->getTelegramInfo('sendvideo', $videoParams));
-//
-//                    $nachPosURL = strpos($contentBox, "https://cs");
-//                    $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
-//                    $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
-//
+
+                    $nachPosURL = strpos($contentBox, "https://cs");
+                    $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
+                    $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
+
 //                    dump($URL_string);
-//
-//                    $subArray['type']  = 'video';
-//                    $subArray['media'] = $URL_string;
-//
-//                    $content = file_get_contents($URL_string);
-//                    file_put_contents($this->theWay . $post_id . "-" . $i . ".mp4", $content);
+                    $subArray['type']  = 'video';
+                    $subArray['media'] = $URL_string;
+
+                    $content = file_get_contents($URL_string);
+
+                    $data = [
+                            'chat_id' => '404022092',
+                            'document' => fopen('C:\Users\администратор\Desktop\docs\195-1.mp4 ', "r"),
+                            ];
+
+                    dump($this->getTelegramInfo('sendDocument',$data));
+                    //file_put_contents('C:\Users\администратор\Desktop\docs\ ' . $post_id . "-" . $i . ".mp4", $content);
                 }
             }
         }
