@@ -82,38 +82,42 @@ class SaveController extends Controller
                     $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
-                    dump($type);
-                    //$i++;
                     $contentBox = file_get_contents($type['0']->link);
-
-//                    $videoParams = [
-//                        'chat_id' => $this->chat_id,
-//                        'video'   => $URL_string
-//                    ];
-//                    dump($this->getTelegramInfo('sendvideo', $videoParams));
-
                     $nachPosURL = strpos($contentBox, "https://cs");
                     $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
                     $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
-
-//                    dump($URL_string);
                     $subArray['type']  = 'video';
                     $subArray['media'] = $URL_string;
-
                     $content = file_get_contents($URL_string);
 
-                    $data = [
-                            'chat_id' => '404022092',
-                            'document' => fopen('C:\Users\администратор\Desktop\docs\195-1.mp4 ', "r"),
-                            ];
+                    $request = $this->curlRequest("https://api.telegram.org/bot$this->TelegramToken/sendDocument?chat_id=$this->chat_id",$content);
+                    dump($request);
 
-                    dump($this->getTelegramInfo('sendDocument',$data));
-                    //file_put_contents('C:\Users\администратор\Desktop\docs\ ' . $post_id . "-" . $i . ".mp4", $content);
+
+
+
+
+
                 }
             }
         }
         dd(session('send_tg'));
     }
+
+    public function curlRequest($url, $postdata){
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+
+
 
     /**
      * @param $info

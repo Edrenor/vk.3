@@ -37,7 +37,7 @@ class IndexController extends Controller
      * @var array
      */
     var $domains = [
-        'bestad',
+        'vinevinevine',
     ];   // 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
 
     /**
