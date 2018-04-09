@@ -73,7 +73,9 @@ class SaveController extends Controller
         $info        = $this->dispatch(new MaterialListByPosId($post_id));
         $sortByTypes = $this->sortByTypes($info);
 
+
         foreach ($sortByTypes as $key_type => $type) {
+            $i=0;
             if (count($type) != 0) {
                 if ($key_type == "photo") {
                     $this->dispatch(new SendMediaGroupMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
@@ -82,15 +84,31 @@ class SaveController extends Controller
                     $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
+                    $i++;
                     $contentBox = file_get_contents($type['0']->link);
                     $nachPosURL = strpos($contentBox, "https://cs");
                     $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
                     $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
-                    $subArray['type']  = 'video';
-                    $subArray['media'] = $URL_string;
+                    dump($URL_string);
                     $content = file_get_contents($URL_string);
 
-                    $request = $this->curlRequest("https://api.telegram.org/bot$this->TelegramToken/sendDocument?chat_id=$this->chat_id",$content);
+                    $filePath = "C:\Users\PHEX\Desktop\docs\\" . $post_id . "-" . $i . ".mp4";
+
+                    file_put_contents($filePath, $content);
+
+                   $fileToload = new \CURLFile(realpath($filePath));
+                   $postdata = [
+                                'chat_id' => $this->chat_id,
+                                'video' => $fileToload
+
+                   ];
+                   $requestToLoadVideo = $this->getTelegramInfo('sendVideo',[],$postdata);
+                   $params = [
+                    'chat_id' => $this->chat_id,
+                    'video' => $requestToLoadVideo['result']['video']['file_id']
+                            ];
+                   $request = $this->getTelegramInfo('sendVideo',$params);
+
                     dump($request);
 
 
@@ -108,7 +126,8 @@ class SaveController extends Controller
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        //curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type:multipart/form-data'));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 

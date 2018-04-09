@@ -172,9 +172,9 @@ class IndexController extends Controller
             $subArray         = [];
             $subArray["type"] = "video";
             $subArray["url"]  = $videoResponse["response"]["items"]["0"]["player"];
+        return $subArray;
         }
 
-        return $subArray;
     }
 
     /** СОЗДАНИЕ МАССИВА ИЗ ВЛОЖЕНИЙ

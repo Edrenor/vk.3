@@ -9,6 +9,11 @@
     <body>
 
         <div class="container">
+
+
+
+
+
             <!-- Content here -->
             @foreach($array as $row)
                 <div class="form-group">
