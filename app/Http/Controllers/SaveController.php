@@ -6,6 +6,7 @@ use App\Domain\_Traits\TgTrait;
 use App\Domain\Material\Commands\SendDocMaterialsToTg;
 use App\Domain\Material\Commands\SendMediaGroupMaterialsToTg;
 use App\Domain\Material\Queries\MaterialListByPosId;
+use Telegram;
 
 /**
  * Class SaveController
@@ -84,6 +85,13 @@ class SaveController extends Controller
                     $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
+
+
+                    Telegram::bot()->sendMessage([
+                        'chat_id' => '-1001329091680.0',
+                        'text' => 'работает'
+                    ]);
+
                     $i++;
                     $contentBox = file_get_contents($type['0']->link);
                     $nachPosURL = strpos($contentBox, "https://cs");
@@ -103,19 +111,7 @@ class SaveController extends Controller
 
                    ];
                    $requestToLoadVideo = $this->getTelegramInfo('sendVideo',[],$postdata);
-                   $params = [
-                    'chat_id' => $this->chat_id,
-                    'video' => $requestToLoadVideo['result']['video']['file_id']
-                            ];
-                   $request = $this->getTelegramInfo('sendVideo',$params);
-
-                    dump($request);
-
-
-
-
-
-
+                   $result = Request::sendMessage(['chat_id' => $this->chat_id, 'text' => 'Your utf8 text 😜 ...']);
                 }
             }
         }

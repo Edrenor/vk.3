@@ -6,8 +6,10 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "irazasyed/telegram-bot-sdk": "dev-master",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "longman/telegram-bot": "^0.53.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
