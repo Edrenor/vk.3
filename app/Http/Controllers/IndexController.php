@@ -32,12 +32,12 @@ class IndexController extends Controller
     /**
      * @var string
      */
-    var $count = "50";
+    var $count = "10";
     /**
      * @var array
      */
     var $domains = [
-        'vinevinevine',
+        'bestad','vinevinevine','mrzlk','igm',
     ];   // 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
 
     /**

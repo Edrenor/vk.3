@@ -11,6 +11,7 @@ namespace App\Domain\Material\Commands;
 use App\CQRS\Job;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Domain\_Traits\TgTrait;
+use Telegram;
 
 class SendMediaGroupMaterialsToTg extends Job
 {

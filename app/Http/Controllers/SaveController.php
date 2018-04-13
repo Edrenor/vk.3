@@ -48,21 +48,6 @@ class SaveController extends Controller
         $this->theWay        = storage_path('app/attachments/');
     }
 
-    /**
-     * @param $method
-     * @param $type
-     * @param $url
-     */
-    function sendTelegramMessage($method, $type, $url)
-    {
-        $params = [
-            'chat_id' => '404022092', //чат с лехой 185706999, мой чат 404022092 , чат группы -1001329091680
-            $type     => $url
-        ];
-        dump($this->getTelegramInfo('getUpdates', []));
-        dump($this->getTelegramInfo($method, $params));
-    }
-
 //СОХРАНЕНИЕ ЭЛЕМЕНТОВ ПОСТА
 
     /**
@@ -85,13 +70,6 @@ class SaveController extends Controller
                     $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
-
-
-                    Telegram::bot()->sendMessage([
-                        'chat_id' => '-1001329091680.0',
-                        'text' => 'работает'
-                    ]);
-
                     $i++;
                     $contentBox = file_get_contents($type['0']->link);
                     $nachPosURL = strpos($contentBox, "https://cs");
@@ -104,33 +82,31 @@ class SaveController extends Controller
 
                     file_put_contents($filePath, $content);
 
-                   $fileToload = new \CURLFile(realpath($filePath));
-                   $postdata = [
-                                'chat_id' => $this->chat_id,
-                                'video' => $fileToload
-
-                   ];
-                   $requestToLoadVideo = $this->getTelegramInfo('sendVideo',[],$postdata);
-                   $result = Request::sendMessage(['chat_id' => $this->chat_id, 'text' => 'Your utf8 text 😜 ...']);
+                   //$fileToload = new \CURLFile(realpath($filePath));
+                   
+                    Telegram::bot()->sendVideo([
+                        'chat_id' => $this->chat_id,
+                        'video' => $filePath
+                    ]);
                 }
             }
         }
         dd(session('send_tg'));
     }
 
-    public function curlRequest($url, $postdata){
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        //curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type:multipart/form-data'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+    // public function curlRequest($url, $postdata){
+    //     $ch = curl_init($url);
+    //     curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
+    //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    //     curl_setopt($ch, CURLOPT_POST, 1);
+    //     //curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type:multipart/form-data'));
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 
-        $response = curl_exec($ch);
-        curl_close($ch);
-        return $response;
-    }
+    //     $response = curl_exec($ch);
+    //     curl_close($ch);
+    //     return $response;
+    // }
 
 
 

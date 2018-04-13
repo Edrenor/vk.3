@@ -11,6 +11,8 @@ namespace App\Domain\Material\Commands;
 use App\CQRS\Job;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Domain\_Traits\TgTrait;
+use Telegram\Bot\Api;
+use Telegram;
 
 class SendDocMaterialsToTg extends Job
 {
@@ -38,16 +40,19 @@ class SendDocMaterialsToTg extends Job
     public function handle()
     {
         foreach ($this->materials as $key => $array) {
-            $docParams = [
-                'chat_id'  => $this->chat_id,
-                'document' => $array->link
-            ];
-            $result    = $this->getTelegramInfo('sendDocument', $docParams);
+            $telegram = new Api($this->TelegramToken);
+            $result = $telegram->sendVideo([
+                        'chat_id' => $this->chat_id,
+                        'video' => $array->link,
+                        'caption' => 'This is a gifko'
+                    ]);
+            dump($result);
+            echo "Отправлено";
         }
-        if ($result['ok'] == true) {
-            $send_tg   = session('send_tg', []);
-            $send_tg[] = count($this->materials) . ' docs sended to tg';
-            session(['send_tg' => $send_tg]);
-        }
+        // if ($result['ok'] == true) {
+        //     $send_tg   = session('send_tg', []);
+        //     $send_tg[] = count($this->materials) . ' docs sended to tg';
+        //     session(['send_tg' => $send_tg]);
+        // }
     }
 }
