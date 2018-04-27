@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\_Traits\TgTrait;
 use App\Domain\Material\Commands\SendDocMaterialsToTg;
 use App\Domain\Material\Commands\SendMediaGroupMaterialsToTg;
+use App\Domain\Material\Commands\SendVideoToTg;
 use App\Domain\Material\Queries\MaterialListByPosId;
 use Telegram;
 
@@ -61,7 +62,6 @@ class SaveController extends Controller
 
 
         foreach ($sortByTypes as $key_type => $type) {
-            $i=0;
             if (count($type) != 0) {
                 if ($key_type == "photo") {
                     $this->dispatch(new SendMediaGroupMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
@@ -70,45 +70,12 @@ class SaveController extends Controller
                     $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
-                    $i++;
-                    $contentBox = file_get_contents($type['0']->link);
-                    $nachPosURL = strpos($contentBox, "https://cs");
-                    $promSrting = substr($contentBox, strpos($contentBox, "https://cs"));
-                    $URL_string = substr($promSrting, 0, strpos($promSrting, "\""));
-                    dump($URL_string);
-                    $content = file_get_contents($URL_string);
-
-                    $filePath = "C:\Users\PHEX\Desktop\docs\\" . $post_id . "-" . $i . ".mp4";
-
-                    file_put_contents($filePath, $content);
-
-                   //$fileToload = new \CURLFile(realpath($filePath));
-                   
-                    Telegram::bot()->sendVideo([
-                        'chat_id' => $this->chat_id,
-                        'video' => $filePath
-                    ]);
+                    $this->dispatch(new SendVideoToTg($type, $this->chat_id, $this->TelegramToken));
                 }
             }
         }
-        dd(session('send_tg'));
+        //dd(session('send_tg'));
     }
-
-    // public function curlRequest($url, $postdata){
-    //     $ch = curl_init($url);
-    //     curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
-    //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    //     curl_setopt($ch, CURLOPT_POST, 1);
-    //     //curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type:multipart/form-data'));
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-
-    //     $response = curl_exec($ch);
-    //     curl_close($ch);
-    //     return $response;
-    // }
-
-
 
     /**
      * @param $info

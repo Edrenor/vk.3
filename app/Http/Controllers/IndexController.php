@@ -37,8 +37,8 @@ class IndexController extends Controller
      * @var array
      */
     var $domains = [
-        'bestad','vinevinevine','mrzlk','igm',
-    ];   // 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
+        'igromania'
+    ];   // 'videosos', 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
 
     /**
      * IndexController constructor.
@@ -126,11 +126,13 @@ class IndexController extends Controller
                                 $array['post_id'],
                                 $array['date'],
                                 $array['text'],
-                                $array["attachments"]
+                                $array['attachments']
                             )
                         );
                         //$outputArray[$array['date']] = $array;
+
                         $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
+
                     } else {
                         $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
                     }
@@ -139,8 +141,6 @@ class IndexController extends Controller
         }
 
         krsort($outputArray);
-
-        //dump($outputArray);
         return $outputArray;
     }
 
@@ -167,6 +167,7 @@ class IndexController extends Controller
             'owner_id=' . $item['video']['owner_id'] . '&videos=' . $item['video']['owner_id'] . '_'
             . $item['video']['id'] . ''
         );
+
 
         if (array_key_exists("response", $videoResponse)) {
             $subArray         = [];

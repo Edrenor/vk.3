@@ -51,6 +51,7 @@ class SendMediaGroupMaterialsToTg extends Job
             'media'   => json_encode($mediaArray)
         ];
         $result = $this->getTelegramInfo('sendMediagroup', $params);
+        dump($result);
         if ($result['ok'] == true) {
             $send_tg = session('send_tg', []);
             $send_tg[] = count($this->materials) . ' photo sended to tg';
