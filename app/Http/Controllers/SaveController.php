@@ -7,6 +7,7 @@ use App\Domain\Material\Commands\SendDocMaterialsToTg;
 use App\Domain\Material\Commands\SendMediaGroupMaterialsToTg;
 use App\Domain\Material\Commands\SendVideoToTg;
 use App\Domain\Material\Queries\MaterialListByPosId;
+use App\Domain\Material\Queries\PostByPostID;
 use Telegram;
 
 /**
@@ -59,18 +60,20 @@ class SaveController extends Controller
         $post_id     = $id;
         $info        = $this->dispatch(new MaterialListByPosId($post_id));
         $sortByTypes = $this->sortByTypes($info);
-
+        $post = $this->dispatch(new PostByPostID($post_id));
+        dump($post->text);
 
         foreach ($sortByTypes as $key_type => $type) {
             if (count($type) != 0) {
+
                 if ($key_type == "photo") {
-                    $this->dispatch(new SendMediaGroupMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
+                    $this->dispatch(new SendMediaGroupMaterialsToTg($type, $post->text, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "doc") {
-                    $this->dispatch(new SendDocMaterialsToTg($type, $this->chat_id, $this->TelegramToken));
+                    $this->dispatch(new SendDocMaterialsToTg($type, $post->text, $this->chat_id, $this->TelegramToken));
                 }
                 if ($key_type == "video") {
-                    $this->dispatch(new SendVideoToTg($type, $this->chat_id, $this->TelegramToken));
+                    $this->dispatch(new SendVideoToTg($type, $post->text, $this->chat_id, $this->TelegramToken));
                 }
             }
         }

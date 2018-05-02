@@ -25,11 +25,14 @@ class SendDocMaterialsToTg extends Job
      * SendMediaGroupMaterialsToTg constructor.
      *
      * @param $materials
+     * @param $text
      * @param $chat_id
+     * @param $TelegramToken
      */
-    public function __construct($materials, $chat_id, $TelegramToken)
+    public function __construct($materials, $text, $chat_id, $TelegramToken)
     {
         $this->materials     = $materials;
+        $this->text          = $text;
         $this->chat_id       = $chat_id;
         $this->TelegramToken = $TelegramToken;
     }
@@ -41,18 +44,24 @@ class SendDocMaterialsToTg extends Job
     {
         foreach ($this->materials as $key => $array) {
             $telegram = new Api($this->TelegramToken);
-            $result = $telegram->sendVideo([
+
+            if (strlen($this->text) <= 200){
+                $captin = $this->text;
+            }
+            else{
+                $captin = '';
+                $messageParams = [
+                    'chat_id' => $this->chat_id,
+                    'text'   => $this->text,
+                ];
+                $this->getTelegramInfo('sendMessage', $messageParams);
+            }
+
+            $telegram->sendVideo([
                         'chat_id' => $this->chat_id,
                         'video' => $array->link,
-                        'caption' => 'This is a gifko'
+                        'caption' => $this->text,
                     ]);
-            dump($result);
-            echo "Отправлено";
         }
-        // if ($result['ok'] == true) {
-        //     $send_tg   = session('send_tg', []);
-        //     $send_tg[] = count($this->materials) . ' docs sended to tg';
-        //     session(['send_tg' => $send_tg]);
-        // }
     }
 }

@@ -13,16 +13,21 @@ class SendVideoToTg extends Job
     use DispatchesJobs, TgTrait;
     private $chat_id;
     private $materials;
+    private $text;
+    private $TelegramToken;
 
     /**
      * SendMediaGroupMaterialsToTg constructor.
      *
      * @param $materials
+     * @param $text
      * @param $chat_id
+     * @param $TelegramToken
      */
-    public function __construct($materials, $chat_id, $TelegramToken)
+    public function __construct($materials, $text, $chat_id, $TelegramToken)
     {
         $this->materials     = $materials;
+        $this->text          = $text;
         $this->chat_id       = $chat_id;
         $this->TelegramToken = $TelegramToken;
     }
@@ -37,7 +42,8 @@ class SendVideoToTg extends Job
             if (stripos($array->link, 'youtube')){
                 Telegram::bot()->sendMessage([
                     'chat_id' => $this->chat_id,
-                    'text' => $array->link
+                    'text' => $array->link,
+                    'caption' => $this->text,
                 ]);
             }
             else{
@@ -52,11 +58,21 @@ class SendVideoToTg extends Job
 
                 file_put_contents($filePath, $content);
 
-                //$fileToload = new \CURLFile(realpath($filePath));
-
+                if (strlen($this->text) <= 200){
+                    $captin = $this->text;
+                }
+                else{
+                    $captin = '';
+                    $messageParams = [
+                        'chat_id' => $this->chat_id,
+                        'text'   => $this->text,
+                    ];
+                    $this->getTelegramInfo('sendMessage', $messageParams);
+                }
                 Telegram::bot()->sendVideo([
                     'chat_id' => $this->chat_id,
-                    'video' => $filePath
+                    'video' => $filePath,
+                    'caption' => $captin,
                 ]);
             }
 

@@ -20,16 +20,20 @@ class SendMediaGroupMaterialsToTg extends Job
 
     private $materials;
     private $chat_id;
+    private $TelegramToken;
 
     /**
      * SendMediaGroupMaterialsToTg constructor.
      *
      * @param $materials
+     * @param $text
      * @param $chat_id
+     * @param $TelegramToken
      */
-    public function __construct($materials, $chat_id, $TelegramToken)
+    public function __construct($materials, $text, $chat_id, $TelegramToken)
     {
         $this->materials     = $materials;
+        $this->text          = $text;
         $this->chat_id       = $chat_id;
         $this->TelegramToken = $TelegramToken;
     }
@@ -46,16 +50,15 @@ class SendMediaGroupMaterialsToTg extends Job
             $subArray['media'] = $array->link;
             $mediaArray[]      = $subArray;
         }
-        $params = [
+        $videoParams = [
             'chat_id' => $this->chat_id,
-            'media'   => json_encode($mediaArray)
+            'media'   => json_encode($mediaArray),
         ];
-        $result = $this->getTelegramInfo('sendMediagroup', $params);
-        dump($result);
-        if ($result['ok'] == true) {
-            $send_tg = session('send_tg', []);
-            $send_tg[] = count($this->materials) . ' photo sended to tg';
-            session(['send_tg' => $send_tg]);
-        }
+        $messageParams = [
+            'chat_id' => $this->chat_id,
+            'text'   => $this->text,
+        ];
+        $this->getTelegramInfo('sendMessage', $messageParams);
+        $this->getTelegramInfo('sendMediaGroup',$videoParams);
     }
 }
