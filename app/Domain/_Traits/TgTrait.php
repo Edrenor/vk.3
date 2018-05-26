@@ -12,14 +12,14 @@ namespace App\Domain\_Traits;
 trait TgTrait
 {
 
-    function getTelegramInfo($method, $params = null,$postdata = null)
+    function getTelegramInfo($method, $params = null,$postData = null)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if($postdata){
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        if($postData){
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
             curl_setopt($ch,
             CURLOPT_URL,
             "https://api.telegram.org/bot$this->TelegramToken/$method?"

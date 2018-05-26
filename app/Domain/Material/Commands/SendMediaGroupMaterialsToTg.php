@@ -19,6 +19,7 @@ class SendMediaGroupMaterialsToTg extends Job
     use DispatchesJobs, TgTrait;
 
     private $materials;
+    private $text;
     private $chat_id;
     private $TelegramToken;
 
@@ -50,15 +51,19 @@ class SendMediaGroupMaterialsToTg extends Job
             $subArray['media'] = $array->link;
             $mediaArray[]      = $subArray;
         }
-        $videoParams = [
+        $mediaParams = [
             'chat_id' => $this->chat_id,
             'media'   => json_encode($mediaArray),
         ];
-        $messageParams = [
-            'chat_id' => $this->chat_id,
-            'text'   => $this->text,
-        ];
-        $this->getTelegramInfo('sendMessage', $messageParams);
-        $this->getTelegramInfo('sendMediaGroup',$videoParams);
+        if ($this->text){
+            $messageParams = [
+                'chat_id' => $this->chat_id,
+                'text'   => $this->text,
+            ];
+            Telegram::bot()->sendMessage($messageParams);
+        }
+
+
+        $this->getTelegramInfo('sendMediaGroup',$mediaParams);
     }
 }

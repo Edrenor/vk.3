@@ -61,7 +61,8 @@ class SaveController extends Controller
         $info        = $this->dispatch(new MaterialListByPosId($post_id));
         $sortByTypes = $this->sortByTypes($info);
         $post = $this->dispatch(new PostByPostID($post_id));
-        dump($post->text);
+
+        //dump($post->text);
 
         foreach ($sortByTypes as $key_type => $type) {
             if (count($type) != 0) {

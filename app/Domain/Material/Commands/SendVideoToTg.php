@@ -4,7 +4,6 @@ namespace App\Domain\Material\Commands;
 use App\CQRS\Job;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Domain\_Traits\TgTrait;
-use Telegram\Bot\Api;
 use Telegram;
 
 class SendVideoToTg extends Job
@@ -59,20 +58,20 @@ class SendVideoToTg extends Job
                 file_put_contents($filePath, $content);
 
                 if (strlen($this->text) <= 200){
-                    $captin = $this->text;
+                    $caption = $this->text;
                 }
                 else{
-                    $captin = '';
+                    $caption = '';
                     $messageParams = [
                         'chat_id' => $this->chat_id,
                         'text'   => $this->text,
                     ];
-                    $this->getTelegramInfo('sendMessage', $messageParams);
+                    Telegram::bot()->sendVideo($messageParams);
                 }
                 Telegram::bot()->sendVideo([
                     'chat_id' => $this->chat_id,
                     'video' => $filePath,
-                    'caption' => $captin,
+                    'caption' => $caption,
                 ]);
             }
 

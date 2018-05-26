@@ -11,15 +11,17 @@ namespace App\Domain\Material\Commands;
 use App\CQRS\Job;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Domain\_Traits\TgTrait;
-use Telegram\Bot\Api;
 use Telegram;
 
 class SendDocMaterialsToTg extends Job
 {
 
     use DispatchesJobs, TgTrait;
-    private $chat_id;
     private $materials;
+    private $text;
+    private $chat_id;
+    private $TelegramToken;
+    private $caption = '';
 
     /**
      * SendMediaGroupMaterialsToTg constructor.
@@ -43,24 +45,21 @@ class SendDocMaterialsToTg extends Job
     public function handle()
     {
         foreach ($this->materials as $key => $array) {
-            $telegram = new Api($this->TelegramToken);
-
             if (strlen($this->text) <= 200){
-                $captin = $this->text;
+                $this->caption = $this->text;
             }
             else{
-                $captin = '';
                 $messageParams = [
                     'chat_id' => $this->chat_id,
                     'text'   => $this->text,
                 ];
-                $this->getTelegramInfo('sendMessage', $messageParams);
+                Telegram::bot()->sendMessage($messageParams);
             }
 
-            $telegram->sendVideo([
+            Telegram::bot()->sendVideo([
                         'chat_id' => $this->chat_id,
                         'video' => $array->link,
-                        'caption' => $this->text,
+                        'caption' => $this->caption,
                     ]);
         }
     }

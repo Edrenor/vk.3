@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Domain\Material\Queries\MaterialListByPosId;
 use App\Domain\Post\Commands\PostCreateCommand;
 use App\Domain\Post\Queries\PostByPosIdAndOwnerIdQuery;
+use App\Domain\StopWord\Queries\StopWordsByOwnersId;
+
 //имена моделей, с которыми можно работать
 
 /**
@@ -32,14 +34,15 @@ class IndexController extends Controller
     /**
      * @var string
      */
-    var $count = "10";
+    var $count = "20";
     /**
      * @var array
      */
     var $domains = [
-        'igromania',
         'igm',
+        'igromania',
         'vinevinevine',
+        'bestad',
     ];   // 'videosos', 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
 
     /**
@@ -88,7 +91,7 @@ class IndexController extends Controller
 
         foreach ($this->domains as $domain) {
             $response = $this->getInfo("wall.get", "domain=$domain&count=$this->count");
-//            dd($response);
+//            dump($response);
             foreach ($response["response"]["items"] as $items) {
                 $array                = [];
                 $array["attachments"] = [];
@@ -97,46 +100,56 @@ class IndexController extends Controller
                 $array['post_id']  = $items["id"];
                 $array['owner_id'] = $items["owner_id"];
                 $array['text']     = $items['text'];
-//                dd($items, $items["date"] >= date('U') - 86400, $items["date"] , date('U') - 86400);
-                if ($items["date"] >= date('U') - 86400) {
-                    $post = $this->dispatch(new PostByPosIdAndOwnerIdQuery($array['post_id'], $array['owner_id']));
-                    if ($post == null) {
-                        if (array_key_exists("attachments", $items)) {
-                            if ( ! array_key_exists("link", $items['attachments']['0'])) {
-                                foreach ($items["attachments"] as $attachments) {
-                                    $attachment = null;
-                                    switch ($attachments["type"]) {
-                                        case "photo":
-                                            $attachment = $this->photoAttachment($attachments);
-                                            break;
-                                        case "video":
-                                            $attachment = $this->videoAttachment($attachments);
-                                            sleep(1);
-                                            break;
-                                        case "doc":
-                                            $attachment = $this->docAttachment($attachments);
-                                            break;
+
+                $stopWordsCollection = $this->dispatch(new StopWordsByOwnersId($items["owner_id"]));
+                if ($stopWordsCollection){
+                    $stopWordsArray = unserialize($stopWordsCollection->stopWords);
+                    foreach ($stopWordsArray as $stopWord){
+                        if ( stripos($items['text'], $stopWord) ){
+                        }
+                        else {
+                            if ($items["date"] >= date('U') - 86400) {
+                                $post = $this->dispatch(new PostByPosIdAndOwnerIdQuery($array['post_id'], $array['owner_id']));
+                                if ($post == null) {
+                                    if (array_key_exists("attachments", $items)) {
+                                        if ( ! array_key_exists("link", $items['attachments']['0'])) {
+                                            foreach ($items["attachments"] as $attachments) {
+                                                $attachment = null;
+                                                switch ($attachments["type"]) {
+                                                    case "photo":
+                                                        $attachment = $this->photoAttachment($attachments);
+                                                        break;
+                                                    case "video":
+                                                        $attachment = $this->videoAttachment($attachments);
+                                                        sleep(1);
+                                                        break;
+                                                    case "doc":
+                                                        $attachment = $this->docAttachment($attachments);
+                                                        break;
+                                                }
+                                                if ($attachment) {
+                                                    $array["attachments"][] = $attachment;
+                                                }
+                                            }
+                                        }
                                     }
-                                    if ($attachment) {
-                                        $array["attachments"][] = $attachment;
-                                    }
+                                    $this->dispatch(new PostCreateCommand(null,
+                                            $array['owner_id'],
+                                            $array['post_id'],
+                                            $array['date'],
+                                            $array['text'],
+                                            $array['attachments']
+                                        )
+                                    );
+
+                                    $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
+
+                                }
+                                else {
+                                    $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
                                 }
                             }
                         }
-                        $this->dispatch(new PostCreateCommand(null,
-                                $array['owner_id'],
-                                $array['post_id'],
-                                $array['date'],
-                                $array['text'],
-                                $array['attachments']
-                            )
-                        );
-                        //$outputArray[$array['date']] = $array;
-
-                        $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
-
-                    } else {
-                        $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
                     }
                 }
             }
