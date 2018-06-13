@@ -34,15 +34,15 @@ class IndexController extends Controller
     /**
      * @var string
      */
-    var $count = "20";
+    var $count = "50";
     /**
      * @var array
      */
     var $domains = [
+        'bestad',
         'igm',
         'igromania',
         'vinevinevine',
-        'bestad',
     ];   // 'videosos', 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
 
     /**
@@ -51,8 +51,8 @@ class IndexController extends Controller
     public function __construct()
     {
         $this->TelegramToken = getenv('TelegramToken');
-        $this->token         = getenv('VkToken');
-        $this->apiVersion    = getenv('ApiVkVersion');
+        $this->token = getenv('VkToken');
+        $this->apiVersion = getenv('ApiVkVersion');
     }
 
     /** ФУНКЦИЯ ЗАПРОСА К API ВКОНТАКТЕ
@@ -93,85 +93,125 @@ class IndexController extends Controller
             $response = $this->getInfo("wall.get", "domain=$domain&count=$this->count");
 //            dump($response);
             foreach ($response["response"]["items"] as $items) {
-                $array                = [];
-                $array["attachments"] = [];
 
-                $array['date']     = date('Y-m-d H:i:s', $items["date"]);
-                $array['post_id']  = $items["id"];
-                $array['owner_id'] = $items["owner_id"];
-                $array['text']     = $items['text'];
+                if ($this->postValidation($items)) {
+//                    echo 'Пост подходит<br>';
+//                    dump($items);
+                    $array = [];
+                    $array["attachments"] = [];
 
-                $stopWordsCollection = $this->dispatch(new StopWordsByOwnersId($items["owner_id"]));
-                if ($stopWordsCollection){
-                    $stopWordsArray = unserialize($stopWordsCollection->stopWords);
-                    foreach ($stopWordsArray as $stopWord){
-                        if ( stripos($items['text'], $stopWord) ){
-                        }
-                        else {
-                            if ($items["date"] >= date('U') - 86400) {
-                                $post = $this->dispatch(new PostByPosIdAndOwnerIdQuery($array['post_id'], $array['owner_id']));
-                                if ($post == null) {
-                                    if (array_key_exists("attachments", $items)) {
-                                        if ( ! array_key_exists("link", $items['attachments']['0'])) {
-                                            foreach ($items["attachments"] as $attachments) {
-                                                $attachment = null;
-                                                switch ($attachments["type"]) {
-                                                    case "photo":
-                                                        $attachment = $this->photoAttachment($attachments);
-                                                        break;
-                                                    case "video":
-                                                        $attachment = $this->videoAttachment($attachments);
-                                                        sleep(1);
-                                                        break;
-                                                    case "doc":
-                                                        $attachment = $this->docAttachment($attachments);
-                                                        break;
-                                                }
-                                                if ($attachment) {
-                                                    $array["attachments"][] = $attachment;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    $this->dispatch(new PostCreateCommand(null,
-                                            $array['owner_id'],
-                                            $array['post_id'],
-                                            $array['date'],
-                                            $array['text'],
-                                            $array['attachments']
-                                        )
-                                    );
-
-                                    $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
-
-                                }
-                                else {
-                                    $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
-                                }
+                    $array['date'] = date('Y-m-d H:i:s', $items["date"]);
+                    $array['post_id'] = $items["id"];
+                    $array['owner_id'] = $items["owner_id"];
+                    $array['text'] = $items['text'];
+                    $post = $this->dispatch(new PostByPosIdAndOwnerIdQuery($array['post_id'], $array['owner_id']));
+                    if ($post == null) {
+                        foreach ($items["attachments"] as $attachments) {
+                            $attachment = null;
+                            switch ($attachments["type"]) {
+                                case "photo":
+                                    $attachment = $this->photoAttachment($attachments);
+                                    break;
+                                case "video":
+                                    $attachment = $this->videoAttachment($attachments);
+                                    sleep(1);
+                                    break;
+                                case "doc":
+                                    $attachment = $this->docAttachment($attachments);
+                                    break;
+                            }
+                            if ($attachment) {
+                                $array["attachments"][] = $attachment;
                             }
                         }
+                        $this->dispatch(new PostCreateCommand(null,
+                                $array['owner_id'],
+                                $array['post_id'],
+                                $array['date'],
+                                $array['text'],
+                                $array['attachments']
+                            )
+                        );
+
+                        $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
+                    }
+                    else {
+                        $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
+                    }
+                }
+//                else {
+//                    echo 'Пост не подходит<br>';
+//                    dump($items);
+//                }
+            }
+        }
+        krsort($outputArray);
+//        dump($outputArray);
+        return $outputArray;
+    }
+
+    public function postValidation($post)
+    {
+//        dump($post);
+        $stopWordsCollection = $this->dispatch(new StopWordsByOwnersId($post["owner_id"]));
+//        dump($stopWordsCollection);
+        if ( !empty($stopWordsCollection) ) {
+            echo empty($stopWordsCollection);
+            $stopWordsArray = unserialize($stopWordsCollection->stopWords);
+            foreach ($stopWordsArray as $stopWord) {
+                if (stripos($post['text'], $stopWord)) {
+//                    echo 'stopWord in the text';
+                }
+                else {
+                    if($this->postScreening($post)){
+                        return true;
                     }
                 }
             }
         }
+        else {
+//            echo 'no stopWordCollection';
+            if($this->postScreening($post)){
+                return true;
+            }
+        }
 
-        krsort($outputArray);
-        return $outputArray;
+    }
+
+    public function postScreening($post){
+        if (array_key_exists("attachments", $post)) {
+            if ($post["date"] >= date('U') - 86400) {
+                foreach ($post['attachments'] as $attachment) {
+                    if (!array_key_exists("link", $attachment)) {
+                        return true;
+                    }
+//                    else {
+//                        echo 'link in attachment';
+//                    }
+                }
+            }
+//            else {
+//                echo 'wrong date';
+//            }
+        }
+//        else {
+//            echo 'no attachments in the post';
+//        }
     }
 
     public function photoAttachment($item)
     {
         $subArray["type"] = "photo";
-        $subArray["url"]  = $item["photo"]["photo_604"];
+        $subArray["url"] = $item["photo"]["photo_604"];
 
         return $subArray;
     }
 
     public function docAttachment($item)
     {
-        $subArray         = [];
+        $subArray = [];
         $subArray["type"] = "doc";
-        $subArray["url"]  = $item["doc"]["url"];
+        $subArray["url"] = $item["doc"]["url"];
 
         return $subArray;
     }
@@ -185,10 +225,10 @@ class IndexController extends Controller
 
 
         if (array_key_exists("response", $videoResponse)) {
-            $subArray         = [];
+            $subArray = [];
             $subArray["type"] = "video";
-            $subArray["url"]  = $videoResponse["response"]["items"]["0"]["player"];
-        return $subArray;
+            $subArray["url"] = $videoResponse["response"]["items"]["0"]["player"];
+            return $subArray;
         }
 
     }
@@ -202,18 +242,19 @@ class IndexController extends Controller
     function output($item)
     {
         $outputArray = [];
-        $post_info   = $this->dispatch(new PostByPosIdAndOwnerIdQuery($item['post_id'], $item['owner_id']));
+        $post_info = $this->dispatch(new PostByPosIdAndOwnerIdQuery($item['post_id'], $item['owner_id']));
 
-        $outputArray['date']  = $post_info->created_at;
-        $outputArray['id']    = $post_info->id;
+        $outputArray['date'] = $post_info->created_at;
+        $outputArray['id'] = $post_info->id;
         $outputArray['owner'] = $post_info->owner_id;
-        $outputArray['text']  = $post_info->text;
+        $outputArray['text'] = $post_info->text;
 
         $info = $this->dispatch(new MaterialListByPosId($post_info->id));
+//        dump($info);
         foreach ($info as $array) {
-            $subArray                     = [];
-            $subArray['type']             = $array->type;
-            $subArray['url']              = $array->link;
+            $subArray = [];
+            $subArray['type'] = $array->type;
+            $subArray['url'] = $array->link;
             $outputArray["attachments"][] = $subArray;
         }
 

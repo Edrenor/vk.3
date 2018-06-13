@@ -16,3 +16,7 @@ Auth::routes();
 Route::get('/', 'IndexController@index');
 Route::get('/land', 'BasicController@landing');
 Route::get('/post/{id}', 'SaveController@save')->name('postSave');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
