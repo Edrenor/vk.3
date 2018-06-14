@@ -25,19 +25,19 @@
             <div class="uk-grid">
                 <div class="uk-width-large-1-2 uk-width-medium-1-2 uk-width-small-1-1">
                     <div id="top-phone">
-                        Автопостинг1 из Вк
+                        Автопостинг из Вк
                     </div>
                 </div>
                 <div class="uk-width-large-1-2 uk-width-medium-1-2 uk-small-1-1">
                     <div id="top-button">
                         <ul>
                             <li>
-                                <a href="https://forum.infinityfree.net/">
+                                <a href="/forum">
                                     <i class="uk-icon-comments"></i>Форум
                                 </a>
                             </li>
                             <li class="login">
-                                <a href="https://app.infinityfree.net/login">
+                                <a href="/login">
                                     <i class="uk-icon-user"></i>Личный кабинет
                                 </a>
                             </li>
@@ -67,8 +67,8 @@
                                         Цены
                                     </a>
                                 </li>
-                                <li><a href="https://app.infinityfree.net/register">Регистрация</a></li>
-                                <li><a href="https://infinityfree.net/support/">FAQ</a></li>
+                                <li><a href="/register">Регистрация</a></li>
+                                <li><a href="/support">FAQ</a></li>
                             </ul>
                             <a href="/#mobile-nav" class="uk-navbar-toggle uk-visible-small"
                                data-uk-offcanvas=""></a>
@@ -77,16 +77,16 @@
                     <div id="mobile-nav" class="uk-offcanvas">
                         <div class="uk-offcanvas-bar">
                             <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="">
-                                <li><a href="https://infinityfree.net/">Главная</a></li>
+                                <li><a href="/">Главная</a></li>
                                 <li>
                                     <a href="/price/domains/">
                                         Цены
                                     </a>
                                 </li>
-                                <li><a href="https://app.infinityfree.net/register">Регистрация</a></li>
-                                <li><a href="https://app.infinityfree.net/login">Личный кабинет</a></li>
-                                <li><a href="https://forum.infinityfree.net/">Форум</a></li>
-                                <li><a href="https://infinityfree.net/support/">FAQ</a></li>
+                                <li><a href="/register">Регистрация</a></li>
+                                <li><a href="/login">Личный кабинет</a></li>
+                                <li><a href="/forum">Форум</a></li>
+                                <li><a href="/support">FAQ</a></li>
                             </ul>
                         </div>
                     </div>
@@ -196,7 +196,7 @@
                 </h2>
                 <div class="uk-grid uk-margin-medium-top">
                     <div class="uk-width-large-4-10">
-                        <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/sample_object5.png"
+                        <img src="/sample_object5.png"
                              alt=""
                              class="uk-align-left idz-bottom-adjustment5 idz-tablet-potrait-hidden uk-hidden-small">
                     </div>
@@ -204,28 +204,28 @@
                         <h5>Вот некоторые из них</h5>
                         <ul class="hosting-apps">
                             <li>
-                                <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo_wordpress.svg"
-                                     alt="WordPress"> WordPress
+                                <img src=""
+                                     alt="название 1й группы"> 1
                             </li>
                             <li>
-                                <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo_joomla.svg"
-                                     alt="Joomla"> Joomla
+                                <img src=""
+                                     alt="название 2й группы"> 2
                             </li>
                             <li>
-                                <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo_drupal.svg"
-                                     alt="Drupal"> Drupal
+                                <img src=""
+                                     alt="название 3й группы"> 3
                             </li>
                             <li>
-                                <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo_mybb.png"
-                                     alt="MyBB"> MyBB
+                                <img src=""
+                                     alt="название 4й группы"> 4
                             </li>
                             <li>
-                                <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo_prestashop.png"
-                                     alt="PrestaShop"> PrestaShop
+                                <img src=""
+                                     alt="название 5й группы"> 5
                             </li>
                             <li>
-                                <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo_phpbb.png"
-                                     alt="phpBB"> phpBB
+                                <img src=""
+                                     alt="название 6й группы"> 6
                             </li>
                         </ul>
                     </div>
@@ -234,161 +234,161 @@
         </div>
     </div>
 </section>
-<section class="section-black">
-    <div class="uk-container uk-container-center specs-bg-img">
-        <div class="uk-grid uk-padding">
-            <div class="uk-width-large-1-1 uk-text-contrast">
-                <h1 class="uk-text-contrast uk-margin-small-bottom uk-text-center">Free Hosting Features</h1>
-                <p class="uk-text-large uk-margin-small-top uk-text-center">
-                    Everything you could possibly need for your website.
-                </p>
-                <div class="uk-grid uk-margin-medium-top uk-margin-medium-bottom">
-                    <div class="uk-width-large-1-3 uk-width-small-1-1 idz-margin-bottom-ml">
-                        <ul class="uk-list idz-list-check green big">
-                            <li>Unlimited Disk Space</li>
-                            <li>Unlimited Bandwidth</li>
-                            <li>10 Email Accounts</li>
-                            <li>400 MySQL Databases</li>
-                        </ul>
-                    </div>
-                    <div class="uk-width-large-1-3 uk-width-small-1-1 idz-margin-bottom-ml">
-                        <ul class="uk-list idz-list-check green big">
-                            <li>PHP 5.4, 5.5, 5.6, 7.0</li>
-                            <li>MySQL 5.6</li>
-                            <li>Apache 2.4 with .htaccess</li>
-                            <li>Linux 3.2</li>
-                        </ul>
-                    </div>
-                    <div class="uk-width-large-1-3 uk-width-small-1-1">
-                        <ul class="uk-list idz-list-check green big">
-                            <li>Free Sub Domain Name</li>
-                            <li>Free SSL on all websites</li>
-                            <li>Free Cloudflare CDN</li>
-                            <li>Free DNS Service</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="uk-margin-top uk-margin-bottom" style="margin-top: 30px !important;">
-    <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-            <div class="uk-width-1-1 ad-container">
-                <div class="uk-grid">
-                    <div class="uk-width-medium-1-1">
-                        <div class="uk-panel uk-panel-box"><i class="uk-icon-frown-o"></i> <strong>Nobody likes
-                                                                                                   ads</strong>, but
-                                                                                                               InfinityFree
-                                                                                                               is paid
-                                                                                                               for using
-                                                                                                               the ads
-                                                                                                               on our
-                                                                                                               website.
-                                                                                                               If you
-                                                                                                               like our
-                                                                                                               free
-                                                                                                               service,
-                                                                                                               please
-                                                                                                               consider
-                                                                                                               to
-                                                                                                               disable
-                                                                                                               your ad
-                                                                                                               blocker.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="uk-padding">
-    <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-            <div class="uk-width-large-1-1">
-                <h1 class="uk-margin-large-bottom uk-text-center">FAQ - You got questions? We got answers!</h1>
-                <div class="uk-grid">
-                    <div class="uk-width-large-1-2 uk-width-small-1-1">
-                        <h4 class="uk-margin-small-bottom">Is your hosting really free?</h4>
-                        <p class="uk-margin-small-top uk-margin-medium-bottom">
-                            Yes, you can host your website without having to pay. Ever.
-                        </p>
-                        <h4 class="uk-margin-small-bottom">How long does it takes to setup my account?</h4>
-                        <p class="uk-margin-small-top uk-margin-medium-bottom">
-                            Forget about waiting lists, InfinityFree accounts are automatically created in minutes.
-                        </p>
-                        <h4 class="uk-margin-small-bottom">For how long can I use free hosting?</h4>
-                        <p class="uk-margin-small-top uk-margin-medium-bottom">
-                            Forever! We have been providing free hosting since 2011 and some of our users have been with
-                            us since that time.
-                        </p>
-                    </div>
-                    <div class="uk-width-large-1-2 uk-width-small-1-1">
-                        <h4 class="uk-margin-small-bottom">Can I host my own domains?</h4>
-                        <p class="uk-margin-small-top uk-margin-medium-bottom">
-                            Yes, you can easily host your own domain name registered elsewhere on InfinityFree.
-                        </p>
-                        <h4 class="uk-margin-small-bottom">Do I have to get my own domain?</h4>
-                        <p class="uk-margin-small-top uk-margin-medium-bottom">
-                            You can get a free subdomain like yourname.epizy.com or yourname.rf.gd for free!
-                        </p>
-                        <h4 class="uk-margin-small-bottom">Will you put ads on my site?</h4>
-                        <p class="uk-margin-small-top uk-margin-medium-bottom">
-                            Never! We make enough using the ads on our main site and control panel to cover the costs.
-                        </p>
-                    </div>
-                    <div class="uk-width-large-1-1 uk-text-center uk-margin-medium-top">
-                        <a class="uk-button uk-button-small idz-button-blue" href="https://infinityfree.net/support/">
-                            See all questions<i class="uk-icon-chevron-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="uk-margin-top uk-margin-bottom" style="margin-top: 30px !important;">
-    <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-            <div class="uk-width-1-1 ad-container">
-                <div class="uk-grid">
-                    <div class="uk-width-medium-1-1">
-                        <div class="uk-panel uk-panel-box"><i class="uk-icon-frown-o"></i> <strong>Nobody likes
-                                                                                                   ads</strong>, but
-                                                                                                               InfinityFree
-                                                                                                               is paid
-                                                                                                               for using
-                                                                                                               the ads
-                                                                                                               on our
-                                                                                                               website.
-                                                                                                               If you
-                                                                                                               like our
-                                                                                                               free
-                                                                                                               service,
-                                                                                                               please
-                                                                                                               consider
-                                                                                                               to
-                                                                                                               disable
-                                                                                                               your ad
-                                                                                                               blocker.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{{--<section class="section-black">--}}
+    {{--<div class="uk-container uk-container-center specs-bg-img">--}}
+        {{--<div class="uk-grid uk-padding">--}}
+            {{--<div class="uk-width-large-1-1 uk-text-contrast">--}}
+                {{--<h1 class="uk-text-contrast uk-margin-small-bottom uk-text-center">Free Hosting Features</h1>--}}
+                {{--<p class="uk-text-large uk-margin-small-top uk-text-center">--}}
+                    {{--Everything you could possibly need for your website.--}}
+                {{--</p>--}}
+                {{--<div class="uk-grid uk-margin-medium-top uk-margin-medium-bottom">--}}
+                    {{--<div class="uk-width-large-1-3 uk-width-small-1-1 idz-margin-bottom-ml">--}}
+                        {{--<ul class="uk-list idz-list-check green big">--}}
+                            {{--<li>Unlimited Disk Space</li>--}}
+                            {{--<li>Unlimited Bandwidth</li>--}}
+                            {{--<li>10 Email Accounts</li>--}}
+                            {{--<li>400 MySQL Databases</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                    {{--<div class="uk-width-large-1-3 uk-width-small-1-1 idz-margin-bottom-ml">--}}
+                        {{--<ul class="uk-list idz-list-check green big">--}}
+                            {{--<li>PHP 5.4, 5.5, 5.6, 7.0</li>--}}
+                            {{--<li>MySQL 5.6</li>--}}
+                            {{--<li>Apache 2.4 with .htaccess</li>--}}
+                            {{--<li>Linux 3.2</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                    {{--<div class="uk-width-large-1-3 uk-width-small-1-1">--}}
+                        {{--<ul class="uk-list idz-list-check green big">--}}
+                            {{--<li>Free Sub Domain Name</li>--}}
+                            {{--<li>Free SSL on all websites</li>--}}
+                            {{--<li>Free Cloudflare CDN</li>--}}
+                            {{--<li>Free DNS Service</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
+{{--<section class="uk-margin-top uk-margin-bottom" style="margin-top: 30px !important;">--}}
+    {{--<div class="uk-container uk-container-center">--}}
+        {{--<div class="uk-grid">--}}
+            {{--<div class="uk-width-1-1 ad-container">--}}
+                {{--<div class="uk-grid">--}}
+                    {{--<div class="uk-width-medium-1-1">--}}
+                        {{--<div class="uk-panel uk-panel-box"><i class="uk-icon-frown-o"></i> <strong>Nobody likes--}}
+                                                                                                   {{--ads</strong>, but--}}
+                                                                                                               {{--InfinityFree--}}
+                                                                                                               {{--is paid--}}
+                                                                                                               {{--for using--}}
+                                                                                                               {{--the ads--}}
+                                                                                                               {{--on our--}}
+                                                                                                               {{--website.--}}
+                                                                                                               {{--If you--}}
+                                                                                                               {{--like our--}}
+                                                                                                               {{--free--}}
+                                                                                                               {{--service,--}}
+                                                                                                               {{--please--}}
+                                                                                                               {{--consider--}}
+                                                                                                               {{--to--}}
+                                                                                                               {{--disable--}}
+                                                                                                               {{--your ad--}}
+                                                                                                               {{--blocker.--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
+{{--<section class="uk-padding">--}}
+    {{--<div class="uk-container uk-container-center">--}}
+        {{--<div class="uk-grid">--}}
+            {{--<div class="uk-width-large-1-1">--}}
+                {{--<h1 class="uk-margin-large-bottom uk-text-center">FAQ - You got questions? We got answers!</h1>--}}
+                {{--<div class="uk-grid">--}}
+                    {{--<div class="uk-width-large-1-2 uk-width-small-1-1">--}}
+                        {{--<h4 class="uk-margin-small-bottom">Is your hosting really free?</h4>--}}
+                        {{--<p class="uk-margin-small-top uk-margin-medium-bottom">--}}
+                            {{--Yes, you can host your website without having to pay. Ever.--}}
+                        {{--</p>--}}
+                        {{--<h4 class="uk-margin-small-bottom">How long does it takes to setup my account?</h4>--}}
+                        {{--<p class="uk-margin-small-top uk-margin-medium-bottom">--}}
+                            {{--Forget about waiting lists, InfinityFree accounts are automatically created in minutes.--}}
+                        {{--</p>--}}
+                        {{--<h4 class="uk-margin-small-bottom">For how long can I use free hosting?</h4>--}}
+                        {{--<p class="uk-margin-small-top uk-margin-medium-bottom">--}}
+                            {{--Forever! We have been providing free hosting since 2011 and some of our users have been with--}}
+                            {{--us since that time.--}}
+                        {{--</p>--}}
+                    {{--</div>--}}
+                    {{--<div class="uk-width-large-1-2 uk-width-small-1-1">--}}
+                        {{--<h4 class="uk-margin-small-bottom">Can I host my own domains?</h4>--}}
+                        {{--<p class="uk-margin-small-top uk-margin-medium-bottom">--}}
+                            {{--Yes, you can easily host your own domain name registered elsewhere on InfinityFree.--}}
+                        {{--</p>--}}
+                        {{--<h4 class="uk-margin-small-bottom">Do I have to get my own domain?</h4>--}}
+                        {{--<p class="uk-margin-small-top uk-margin-medium-bottom">--}}
+                            {{--You can get a free subdomain like yourname.epizy.com or yourname.rf.gd for free!--}}
+                        {{--</p>--}}
+                        {{--<h4 class="uk-margin-small-bottom">Will you put ads on my site?</h4>--}}
+                        {{--<p class="uk-margin-small-top uk-margin-medium-bottom">--}}
+                            {{--Never! We make enough using the ads on our main site and control panel to cover the costs.--}}
+                        {{--</p>--}}
+                    {{--</div>--}}
+                    {{--<div class="uk-width-large-1-1 uk-text-center uk-margin-medium-top">--}}
+                        {{--<a class="uk-button uk-button-small idz-button-blue" href="/suppor/">--}}
+                            {{--See all questions<i class="uk-icon-chevron-circle-right"></i>--}}
+                        {{--</a>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
+{{--<section class="uk-margin-top uk-margin-bottom" style="margin-top: 30px !important;">--}}
+    {{--<div class="uk-container uk-container-center">--}}
+        {{--<div class="uk-grid">--}}
+            {{--<div class="uk-width-1-1 ad-container">--}}
+                {{--<div class="uk-grid">--}}
+                    {{--<div class="uk-width-medium-1-1">--}}
+                        {{--<div class="uk-panel uk-panel-box"><i class="uk-icon-frown-o"></i> <strong>Nobody likes--}}
+                                                                                                   {{--ads</strong>, but--}}
+                                                                                                               {{--InfinityFree--}}
+                                                                                                               {{--is paid--}}
+                                                                                                               {{--for using--}}
+                                                                                                               {{--the ads--}}
+                                                                                                               {{--on our--}}
+                                                                                                               {{--website.--}}
+                                                                                                               {{--If you--}}
+                                                                                                               {{--like our--}}
+                                                                                                               {{--free--}}
+                                                                                                               {{--service,--}}
+                                                                                                               {{--please--}}
+                                                                                                               {{--consider--}}
+                                                                                                               {{--to--}}
+                                                                                                               {{--disable--}}
+                                                                                                               {{--your ad--}}
+                                                                                                               {{--blocker.--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
 <section class="section-blue">
     <div class="uk-container uk-container-center uk-padding">
         <div class="uk-grid">
             <div class="uk-width-large-1-1 uk-text-contrast uk-text-center">
-                <h1 class="uk-text-contrast uk-margin-bottom">Forget the stereotypes of free hosting!</h1>
+                <h1 class="uk-text-contrast uk-margin-bottom">Подключайся!</h1>
             </div>
             <div class="uk-width-large-1-1 uk-text-center uk-margin-bottom">
                 <a class="uk-button uk-button-large idz-button-white uk-margin-top"
-                   href="https://app.infinityfree.net/register">
-                    Sign Up Now
+                   href="/register">
+                    Зарегистрироваться
                 </a>
             </div>
         </div>
@@ -399,29 +399,27 @@
         <div class="uk-grid">
             <div class="uk-width-large-4-10 uk-width-medium-4-10 uk-width-small-1-1">
                 <div id="logo-footer">
-                    <img src="./Free and Unlimited Web Hosting with PHP and MySQL - InfinityFree_files/logo.png"
-                         alt="InfinityFree">
+                    <img src="/logo.png"
+                         alt="LentaTelegram">
                 </div>
                 <p>
-                    InfinityFree is an independent free hosting initiative, dedicated to providing reliable free hosting
-                    services.
+                    бла бла бла о нас
                 </p>
             </div>
             <div class="uk-width-large-6-10 uk-width-medium-6-10 uk-width-small-1-1">
                 <div class="uk-grid" data-uk-grid-margin="">
                     <div class="uk-width-large-1-3 uk-width-medium-1-3 uk-width-small-1-1 uk-row-first">
-                        <h4>Company</h4>
+                        <h4>О нас</h4>
                         <ul class="uk-list">
-                            <li><a href="https://infinityfree.net/contact/">Contact Us</a></li>
-                            <li><a href="https://infinityfree.net/terms/">Term of Service</a></li>
-                            <li><a href="https://infinityfree.net/privacy/">Privacy Policy</a></li>
+                            <li><a href="#">Контакты</a></li>
+                            <li><a href="#">Условия использования</a></li>
+                            <li><a href="#">Политика</a></li>
                         </ul>
                     </div>
                     <div class="uk-width-large-1-3 uk-width-medium-1-3 uk-width-small-1-1">
-                        <h4>Support</h4>
+                        <h4>Поддержка</h4>
                         <ul class="uk-list">
-                            <li><a href="https://infinityfree.net/support/">Knowledge Center</a></li>
-                            <li><a href="https://forum.infinityfree.net/">Support Forum</a></li>
+                            <li><a href="#">Поддержка</a></li>
                         </ul>
                     </div>
                 </div>
@@ -430,37 +428,23 @@
         <hr>
         <div class="uk-grid copyright-wrap">
             <div class="uk-width-1-2 uk-width-medium-4-10 uk-width-small-1-1">
-                <p>© 2018 InfinityFree. All rights reserved.</p>
+                <p>© 2018 lentaTelegram. All rights reserved.</p>
             </div>
-            <div class="uk-width-1-2 uk-width-medium-6-10 uk-width-small-1-1">
-                <div id="payment-list">
-                    <ul>
-                        <li>
-                            <p>Powered by:
-                                <a href="https://ifastnet.com/portal/aff.php?aff=23782" title="iFastNet Premium Hosting"
-                                   rel="nofollow"
-                                   onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;premium&#39;, &#39;exit&#39;, &#39;homepage-footer&#39;)">
-                                    iFastNet Premium Hosting
-                                </a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
         </div>
     </div>
-    <a href="https://infinityfree.net/#top" class="to-top uk-icon-chevron-up" data-uk-smooth-scroll=""></a>
+    <a href="/#top" class="to-top uk-icon-chevron-up" data-uk-smooth-scroll=""></a>
 </footer>
 
 <div class="uk-grid cookie-message" style="">
     <div class="uk-width-1-1">
         <div class="uk-float-left">
-            <p>This website uses cookies to ensure you get the best experience on our website.
-                <a href="https://infinityfree.net/privacy/">More info</a>
+            <p>Этот сайт использует cookies для обеспечения лучшего взаимодействия
+                <a href="/privacy/">Подробнее</a>
             </p>
         </div>
         <div class="uk-float-right text-right">
-            <a class="uk-button uk-button-success cookie-message-close">Continue</a>
+            <a class="uk-button uk-button-success cookie-message-close">Продолжить</a>
         </div>
     </div>
 </div>
