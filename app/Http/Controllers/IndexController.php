@@ -91,12 +91,13 @@ class IndexController extends Controller
 
         foreach ($this->domains as $domain) {
             $response = $this->getInfo("wall.get", "domain=$domain&count=$this->count");
-//            dump($response);
+            if(! isset($response["response"]["items"])){
+                dd($response);
+            }
             foreach ($response["response"]["items"] as $items) {
 
                 if ($this->postValidation($items)) {
 //                    echo 'Пост подходит<br>';
-//                    dump($items);
                     $array = [];
                     $array["attachments"] = [];
 
@@ -270,7 +271,7 @@ class IndexController extends Controller
     function check($item)
     {
         $select = $this->dispatch(new PostByPosIdAndOwnerIdQuery($item['post_id'], $item['owner_id']));
-        //dump($select);
+
         if ($select) {
             return false;
         }
@@ -286,7 +287,6 @@ class IndexController extends Controller
     {
         $array = $this->getArray();
 
-        //dd($array);
         return view('entryPoint', compact('array'));
     }
 }
