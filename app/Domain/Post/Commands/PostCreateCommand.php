@@ -45,12 +45,10 @@ class PostCreateCommand extends Job
         $post->created_at = $this->date;
         $post->text       = $this->text;
         $post->save();
-
-        if ($this->attachments && is_array($this->attachments) && count($this->attachments) != 0) {
+//        if ($this->attachments && is_array($this->attachments) && count($this->attachments) != 0) {
             foreach ($this->attachments as $attachment) {
-//                dump($attachment);
                 $this->dispatch(new MaterialCreateCommand($post->id, $attachment['type'], $attachment['url']));
-            }
+//            }
         }
     }
 }
