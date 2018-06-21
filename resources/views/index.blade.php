@@ -31,16 +31,22 @@
                 <div class="uk-width-large-1-2 uk-width-medium-1-2 uk-small-1-1">
                     <div id="top-button">
                         <ul>
-                            <li>
-                                <a href="/forum">
-                                    <i class="uk-icon-comments"></i>Форум
-                                </a>
-                            </li>
-                            <li class="login">
-                                <a href="/login">
-                                    <i class="uk-icon-user"></i>Личный кабинет
-                                </a>
-                            </li>
+                            @if (Auth::guest())
+                                <li><a href="{{ route('login') }}">Войти</a></li>
+                                <li><a href="{{ route('register') }}">Зарегистрироваться</a></li>
+                            @else
+                                <li><a href="{{ route('home') }}">Личный кабинет</a></li>
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Выйти
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
