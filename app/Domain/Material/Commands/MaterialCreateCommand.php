@@ -37,7 +37,6 @@ class MaterialCreateCommand extends Job
         $material->post_id = $this->id;
         $material->type    = $this->type;
         $material->link    = $this->url;
-
         $material->save();
     }
 }

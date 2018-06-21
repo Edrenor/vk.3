@@ -6,6 +6,7 @@ use App\Domain\Material\Queries\MaterialListByPosId;
 use App\Domain\Post\Commands\PostCreateCommand;
 use App\Domain\Post\Queries\PostByPosIdAndOwnerIdQuery;
 use App\Domain\StopWord\Queries\StopWordsByOwnersId;
+use Illuminate\Support\Facades\Auth;
 
 //имена моделей, с которыми можно работать
 
@@ -34,7 +35,7 @@ class IndexController extends Controller
     /**
      * @var string
      */
-    var $count = "50";
+    var $count = "10";
     /**
      * @var array
      */
@@ -43,7 +44,9 @@ class IndexController extends Controller
         'igm',
         'igromania',
         'vinevinevine',
-    ];   // 'videosos', 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re'
+        'leprum',
+        'mudakoff',
+    ];   // 'videosos', 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re', 'leprum', 'mudakoff',
 
     /**
      * IndexController constructor.
@@ -115,6 +118,7 @@ class IndexController extends Controller
                                     break;
                                 case "video":
                                     $attachment = $this->videoAttachment($attachments);
+//                                    dump($attachment);
                                     sleep(1);
                                     break;
                                 case "doc":
@@ -217,12 +221,13 @@ class IndexController extends Controller
         return $subArray;
     }
 
-    public function videoAttachment($item)
+    public function videoAttachment($item) //todo придумать что можно сделать с видео
     {
         $videoResponse = $this->getInfo('video.get',
             'owner_id=' . $item['video']['owner_id'] . '&videos=' . $item['video']['owner_id'] . '_'
             . $item['video']['id'] . ''
         );
+//        dump($videoResponse);
 
 
         if (array_key_exists("response", $videoResponse)) {
