@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Channel\Queries\ChannelsListByUserId;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $channelsTg = $this->dispatch(new ChannelsListByUserId(Auth::id()));
+
+        return view('home', compact('channelsTg'));
     }
 }

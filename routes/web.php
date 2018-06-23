@@ -13,10 +13,19 @@
 Auth::routes();
 
 
-Route::get('/', 'IndexController@index');
-Route::get('/land', 'BasicController@landing');
+Route::get('/', 'BasicController@index');
+
+Route::get('/getPosts', 'IndexController@index');
+
 Route::get('/post/{id}', 'SaveController@save')->name('postSave');
 
 Auth::routes();
 
-Route::get('/home', 'IndexController@index')->name('home');
+Route::middleware(['web'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/channel/{id?}/', 'ChannelController@index')->name('channel');
+
+    Route::post('/channel/{id?}', 'ChannelController@update')->name('update_channel');
+});
+
