@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Channel\Queries\ChannelsListByUserId;
-use Illuminate\Http\Request;
+use App\Domain\Source\Queries\SourceListByUserIdChannelId;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -26,7 +27,17 @@ class HomeController extends Controller
     public function index()
     {
         $channelsTg = $this->dispatch(new ChannelsListByUserId(Auth::id()));
+        dump($channelsTg);
+        $sourcesForChannels = [];
+        foreach ($channelsTg as $channelTg){
+            $sources = $this->dispatch(new SourceListByUserIdChannelId( Auth::id(), $channelTg->id) );
+            foreach ($sources as $source){
+                $sourcesForChannels[$channelTg->name][] = $source->source;
+            }
 
-        return view('home', compact('channelsTg'));
+        }
+
+        dump ($sourcesForChannels);
+        return view('home', compact('channelsTg'), compact($sourcesForChannels) );
     }
 }

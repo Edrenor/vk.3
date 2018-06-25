@@ -10,7 +10,6 @@ namespace App\Domain\Channel\Queries;
 
 use App\CQRS\Job;
 use App\Domain\Channel\Models\Channel;
-use App\Domain\Material\Models\Post;
 
 class ChannelsListByUserId extends Job
 {
@@ -30,5 +29,4 @@ class ChannelsListByUserId extends Job
 
         return $channel;
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Material\Queries\MaterialListByPosId;
+use App\Domain\Material\Queries\SourseListByUserIdChannelId;
 use App\Domain\Post\Commands\PostCreateCommand;
 use App\Domain\Post\Queries\PostByPosIdAndOwnerIdQuery;
 use App\Domain\StopWord\Queries\StopWordsByOwnersId;
@@ -92,6 +92,7 @@ class IndexController extends Controller
         $yesterdayDate = new \DateTime();
         $yesterdayDate->add(\DateInterval::createFromDateString('yesterday'));
 
+        dump(serialize($this->domains));
         foreach ($this->domains as $domain) {
             $response = $this->getInfo("wall.get", "domain=$domain&count=$this->count");
             if(! isset($response["response"]["items"])){
@@ -255,7 +256,7 @@ class IndexController extends Controller
         $outputArray['owner'] = $post_info->owner_id;
         $outputArray['text'] = $post_info->text;
 
-        $info = $this->dispatch(new MaterialListByPosId($post_info->id));
+        $info = $this->dispatch(new SourseListByUserIdChannelId($post_info->id));
 //        dump($info);
         foreach ($info as $array) {
             $subArray = [];

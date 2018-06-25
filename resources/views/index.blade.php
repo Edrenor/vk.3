@@ -2,7 +2,7 @@
 <html lang="ru-ru" dir="ltr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Lenta1 Telegram</title>
+    <title>Lenta Telegram</title>
 
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">

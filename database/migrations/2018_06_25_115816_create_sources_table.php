@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateChannelsTable extends Migration
+class CreateSourcesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('channels', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('sources', function (Blueprint $table) {
+            $table->increments('channel_id');
             $table->integer('user_id');
-            $table->text('name');
-            $table->text('token');
-            $table->text('link')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $table->text('source');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('channels');
+        //
     }
 }
