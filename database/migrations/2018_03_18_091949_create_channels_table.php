@@ -18,6 +18,7 @@ class CreateChannelsTable extends Migration
             $table->integer('user_id');
             $table->text('name');
             $table->text('token');
+            $table->text('sources')->nullable();
             $table->text('link')->nullable();
             $table->softDeletes();
             $table->timestamps();

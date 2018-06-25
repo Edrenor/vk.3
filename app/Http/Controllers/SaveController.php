@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Domain\_Traits\TgTrait;
+use App\Domain\Post\Queries\PostByPostID;
 use App\Domain\Material\Commands\SendDocMaterialsToTg;
 use App\Domain\Material\Commands\SendMediaGroupMaterialsToTg;
 use App\Domain\Material\Commands\SendVideoToTg;
 use App\Domain\Material\Queries\MaterialListByPosId;
-use App\Domain\Material\Queries\PostByPostID;
 use Telegram;
 
 /**

@@ -6,10 +6,10 @@
  * Time: 0:18
  */
 
-namespace App\Domain\Material\Queries;
+namespace App\Domain\Post\Queries;
 
 use App\CQRS\Job;
-use App\Domain\Material\Models\Post;
+use App\Domain\Post\Models\Post;
 
 class PostByPostID extends Job
 {

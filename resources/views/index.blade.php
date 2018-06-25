@@ -120,7 +120,7 @@
                                     </h4>
                                     <a class="uk-button uk-button-large idz-button-white uk-margin-top"
                                        href="/register">
-                                        Зарегестрироваться
+                                        Зарегистрироваться
                                     </a>
                                 </div>
                             </div>
