@@ -7,7 +7,7 @@ use App\Domain\Post\Queries\PostByPostID;
 use App\Domain\Material\Commands\SendDocMaterialsToTg;
 use App\Domain\Material\Commands\SendMediaGroupMaterialsToTg;
 use App\Domain\Material\Commands\SendVideoToTg;
-use App\Domain\Material\Queries\SourseListByUserIdChannelId;
+use App\Domain\Material\Queries\MaterialListByPosId;
 use Telegram;
 
 /**
@@ -58,7 +58,7 @@ class SaveController extends Controller
     public function save($id)
     {
         $post_id     = $id;
-        $info        = $this->dispatch(new SourseListByUserIdChannelId($post_id));
+        $info        = $this->dispatch(new MaterialListByPosId($post_id));
         $sortByTypes = $this->sortByTypes($info);
         $post = $this->dispatch(new PostByPostID($post_id));
 

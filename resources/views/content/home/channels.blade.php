@@ -26,13 +26,14 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$channelTg->name}}</td>
                                         <td>
-                                            Microsoft Developer Russia
-                                            <br/>
-                                            Microsoft Developer Russia
-                                            <br/>
-                                            Microsoft Developer Russia
-                                            <br/>
-                                            Microsoft Developer Russia
+                                            @foreach($sourcesForChannels as $key=>$sourcesForChannel)
+                                                @if($key == $channelTg->name)
+                                                    @foreach($sourcesForChannel as $source)
+                                                        {{$source}}
+                                                        <br/>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
                                         </td>
                                         <td style="text-align: right">
                                             <a href="{{route('channel', ['id' => $channelTg->id])}}"

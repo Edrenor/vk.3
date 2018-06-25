@@ -18,6 +18,7 @@ class CreateStopWordsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('owner_id');
             $table->text('stopWords');
+            $table->timestamps();
 
     });
 

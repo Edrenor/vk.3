@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->bigInteger('post_id');
             $table->dateTime('created_at');
             $table->text('text')->nullable();
+            $table->timestamps();
         });
     }
 

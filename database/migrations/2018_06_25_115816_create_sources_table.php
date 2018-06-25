@@ -17,6 +17,7 @@ class CreateSourcesTable extends Migration
             $table->increments('channel_id');
             $table->integer('user_id');
             $table->text('source');
+            $table->timestamps();
         });
     }
 

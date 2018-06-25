@@ -38,6 +38,6 @@ class HomeController extends Controller
         }
 
         dump ($sourcesForChannels);
-        return view('home', compact('channelsTg'), compact($sourcesForChannels) );
+        return view('home', compact('channelsTg', 'sourcesForChannels') );
     }
 }
