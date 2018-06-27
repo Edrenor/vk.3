@@ -11,7 +11,6 @@ namespace App\Domain\Channel\Commands;
 use App\CQRS\Job;
 use App\Domain\Channel\Models\Channel;
 use App\Domain\Channel\Queries\ChannelById;
-use App\Domain\Material\Models\Post;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class UpdateChannel extends Job
@@ -52,6 +51,7 @@ class UpdateChannel extends Job
         $channel->save();
 
         session(['channel'=> $channel->id]);
+        return 0;
     }
 
 }

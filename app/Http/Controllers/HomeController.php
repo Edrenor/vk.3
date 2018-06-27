@@ -27,7 +27,6 @@ class HomeController extends Controller
     public function index()
     {
         $channelsTg = $this->dispatch(new ChannelsListByUserId(Auth::id()));
-        dump($channelsTg);
         $sourcesForChannels = [];
         foreach ($channelsTg as $channelTg){
             $sources = $this->dispatch(new SourceListByUserIdChannelId( Auth::id(), $channelTg->id) );
@@ -36,8 +35,6 @@ class HomeController extends Controller
             }
 
         }
-
-        dump ($sourcesForChannels);
         return view('home', compact('channelsTg', 'sourcesForChannels') );
     }
 }

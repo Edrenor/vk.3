@@ -18,8 +18,27 @@
                             <input type="text" class="form-control" name="token" id="token" value="{{$channel->token}}">
                         </div>
                         <div class="col-md-12">
-                            <label for="name">Ссылка на канал( необязательно ) </label>
+                            <label for="name">Ссылка на канал( необязательно )</label>
                             <input type="text" class="form-control" name="link" id="link" value="{{$channel->link}}">
+                        </div>
+                        <div class="col-md-12">
+                            @if(!$sourceForChannel)
+                                Источников пока нет, вы можете их добавить.<br>
+                            @else
+                                <label>Источники :</label>
+                                <br>
+
+                                @foreach($sourceForChannel as $key=>$sourceForChannel1)
+                                    @if($key == $channel->name)
+                                        @foreach($sourceForChannel1 as $source)
+                                            <b>{{$source}}</b>
+                                            <br/>
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            @endif
+                            <label for="name">Добавить источник </label>
+                            <input type="text" class="form-control" name="source" id="source" value="{{$channel->source}}">
                         </div>
                         {{--<div class="col-md-12">--}}
                         {{--<label for="name">Тип доступа</label>--}}
