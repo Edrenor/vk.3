@@ -26,6 +26,10 @@ Route::middleware(['web'])->group(function () {
 
     Route::get('/channel/{id?}/', 'ChannelController@index')->name('channel');
 
+    Route::post('/channel/{id?}', 'SourceController@add')->name('add_source');
+
     Route::post('/channel/{id?}', 'ChannelController@update')->name('update_channel');
+
+
 });
 

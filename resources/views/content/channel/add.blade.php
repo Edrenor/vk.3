@@ -37,8 +37,7 @@
                                     @endif
                                 @endforeach
                             @endif
-                            <label for="name">Добавить источник </label>
-                            <input type="text" class="form-control" name="source" id="source" value="{{$channel->source}}">
+
                         </div>
                         {{--<div class="col-md-12">--}}
                         {{--<label for="name">Тип доступа</label>--}}
@@ -53,6 +52,18 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <form>
+                <label for="name">Добавить источник </label>
+                <input type="text" class="form-control" name="source" id="source" value="{{$channel->source}}">
+
+                <div class="col-md-12" style="margin-top: 10px">
+                    <button class="btn btn-success">Добавить источник</button>
+                </div>
+
+
+            </form>
         </div>
     </div>
 @endsection

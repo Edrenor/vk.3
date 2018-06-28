@@ -13,7 +13,7 @@ class CreateStopWordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stopWords', function (Blueprint $table) {
+        Schema::create('stop_Words', function (Blueprint $table) {
 
             $table->bigInteger('user_id');
             $table->bigInteger('owner_id');
@@ -31,6 +31,6 @@ class CreateStopWordsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('stop_Words');
     }
 }

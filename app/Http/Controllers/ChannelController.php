@@ -32,11 +32,11 @@ class ChannelController extends Controller
     {
         $channel = $this->dispatch(new ChannelFindOrNewById($id));
         $sourceForChannel = [];
-        $sources = $this->dispatch(new SourceListByUserIdChannelId( Auth::id(), $channel->id) );
-            foreach ($sources as $source){
-                $sourceForChannel[$channel->name][] = $source->source;
-            }
-        return view('content.channel.add', compact('channel','sourceForChannel'));
+        $sources = $this->dispatch(new SourceListByUserIdChannelId(Auth::id(), $channel->id));
+        foreach ($sources as $source) {
+            $sourceForChannel[$channel->name][] = $source->source;
+        }
+        return view('content.channel.add', compact('channel', 'sourceForChannel'));
     }
 
     public function update($id = null, Request $request)
@@ -44,7 +44,6 @@ class ChannelController extends Controller
         $this->dispatch(new UpdateChannel($id, $request->name, $request->token, $request->link, Auth::id()));
 
         $channel_id = session('channel');
-        $this->dispatch(new AddSource($channel_id, Auth::id(), $request->source) );
 
         return redirect()->route('channel', ['id' => $channel_id]);
     }

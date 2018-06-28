@@ -51,7 +51,6 @@ class UpdateChannel extends Job
         $channel->save();
 
         session(['channel'=> $channel->id]);
-        return 0;
     }
 
 }
