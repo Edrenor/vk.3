@@ -32,6 +32,9 @@
                                     @if($key == $channel->name)
                                         @foreach($sourceForChannel1 as $source)
                                             <b>{{$source}}</b>
+                                            <a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"
+                                                                  class="btn btn-danger btn-sm">удалить
+                                            </a>
                                             <br/>
                                         @endforeach
                                     @endif

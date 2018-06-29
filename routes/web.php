@@ -28,6 +28,8 @@ Route::middleware(['web'])->group(function () {
 
     Route::post('/source/{channel_id}/{id?}', 'SourceController@update')->name('update_source');
 
+    Route::get('/source/delete/{id?}','SourceController@delete')->name('delete_source');
+
     Route::post('/channel/{id?}', 'ChannelController@update')->name('update_channel');
 
 
