@@ -14,10 +14,7 @@ class SourceController extends Controller
         $this->middleware('auth');
     }
 
-    public function add($id = null, Request $request)
-    {
-
-        $channel_id = session('channel');
+    public function update($channel_id, Request $request){
 
         $this->dispatch(new AddSource($channel_id, Auth::id(), $request->source));
 

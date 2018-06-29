@@ -13,11 +13,11 @@ class CreateStopWordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stop_Words', function (Blueprint $table) {
+        Schema::create('stop_words', function (Blueprint $table) {
 
             $table->bigInteger('user_id');
             $table->bigInteger('owner_id');
-            $table->text('stopWords');
+            $table->text('stop_words');
             $table->timestamps();
 
     });
@@ -31,6 +31,6 @@ class CreateStopWordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stop_Words');
+        Schema::dropIfExists('stop_words');
     }
 }

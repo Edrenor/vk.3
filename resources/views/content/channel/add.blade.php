@@ -53,18 +53,25 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-8 col-md-offset-2">
-            <form>
-                <label for="name">Добавить источник </label>
-                <input type="text" class="form-control" name="source" id="source" value="{{$channel->source}}">
+        @if($channel->id)
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <form action="{{ route('update_source', ['channel_id' => $channel->id,'id'=>$channel->user_id]) }}"
+                          method="post">
+                        {{ csrf_field() }}
+                        <div class="panel-body">
 
-                <div class="col-md-12" style="margin-top: 10px">
-                    <button class="btn btn-success">Добавить источник</button>
+                            <label for="name">Добавить источник </label>
+                            <input type="text" class="form-control" name="source" id="source">
+
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <button class="btn btn-success">Добавить источник</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-
-            </form>
-        </div>
+            </div>
+        @endif
     </div>
 @endsection
 
