@@ -30,14 +30,6 @@
                                        value="{{$channel->token}}">
                             </div>
                         </div>
-
-                        {{--<div class="col-md-12">--}}
-                        {{--<label for="name">Тип доступа</label>--}}
-                        {{--<br/>--}}
-                        {{--<input type="radio" name="type" value="open">Открытый--}}
-                        {{--<input type="radio" name="type" value="group_token">Токен группы--}}
-                        {{--<input type="radio" name="type" value="app_token">Токен приложения--}}
-                        {{--</div>--}}
                         <div class="col-md-12" style="margin-top: 10px">
                             <button class="btn btn-success">Сохранить</button>
                         </div>
@@ -88,6 +80,12 @@
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$source}}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settings_source_1">
+                                                                Настроить
+                                                            </button>
+                                                            @include('content.source.modal_add')
+                                                        </td>
                                                         <td>
                                                             <a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"
                                                                class="btn btn-danger btn-sm">удалить
