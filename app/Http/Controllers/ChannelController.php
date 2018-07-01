@@ -36,6 +36,7 @@ class ChannelController extends Controller
         foreach ($sources as $source) {
             $sourceForChannel[$channel->name][] = $source->source;
         }
+
         return view('content.channel.add', compact('channel', 'sourceForChannel'));
     }
 

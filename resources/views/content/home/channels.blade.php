@@ -1,24 +1,21 @@
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Каналы в telegram</h4>
-                <div class="btn-group pull-right">
-                    <a href="/channel/" class="btn btn-success btn-sm">## Добавить</a>
-                </div>
+<div class="form-group row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header clearfix">
+                <span class=" pull-xs-left">Каналы в telegram</span>
+                <a href="/channel/"  class="btn btn-primary btn-sm float-right" >## Добавить</a>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 @if (count($channelsTg))
                     <div class="table-responsive">
-
                         <table class="table table-hover table-condensed table-striped">
-                            <thead>
-                            <tr>
-                                <th>№</th>
-                                <th>Наименование</th>
-                                <th>Источники</th>
-                                <th></th>
-                            </tr>
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>№</th>
+                                    <th>Наименование</th>
+                                    <th>Источники</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach($channelsTg as $channelTg)
@@ -36,8 +33,8 @@
                                         @endforeach
                                     </td>
                                     <td style="text-align: right">
-                                        <a href="{{route('channel', ['id' => $channelTg->id])}}"
-                                           class="btn btn-success btn-sm">Статистика
+                                        <a href="{{route('channel_post', ['id' => $channelTg->id])}}"
+                                           class="btn btn-success btn-sm">К постам
                                         </a>
                                         <br/>
                                         <a href="{{route('channel', ['id' => $channelTg->id])}}"
@@ -51,7 +48,7 @@
                         </table>
                     </div>
                 @else
-                    Вы еще не добавили ни одного канала
+                    <span>Вы еще не добавили ни одного канала</span>
                 @endif
             </div>
         </div>

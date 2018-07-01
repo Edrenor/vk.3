@@ -1,47 +1,36 @@
-@extends('layouts.app')
+@extends('layouts.app_bs4')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h2>Добавление telegram канала</h2>
-
-            <div class="panel panel-default">
+    <div class="container">
+        <br/>
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Добавление telegram канала</h4>
+            </div>
+            <div class="card-body">
                 <form action="{{ route('update_channel', ['id' => $channel->id]) }}" method="post">
                     <div class="panel-body">
                         {{csrf_field()}}
-                        <div class="col-md-12">
-                            <label for="name">Наименование</label>
-                            <input type="text" class="form-control" name="name" id="name" value="{{$channel->name}}">
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label for="name" class=" col-form-label">Наименование</label>
+                                <input type="text" class="form-control" name="name" id="name"
+                                       value="{{$channel->name}}">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="link" class="col-form-label">Ссылка на канал( необязательно )</label>
+                                <input type="text" class="form-control" name="link" id="link"
+                                       value="{{$channel->link}}">
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <label for="name">Токен бота телеграмм</label>
-                            <input type="text" class="form-control" name="token" id="token" value="{{$channel->token}}">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="token" class="col-form-label">Токен бота телеграмм</label>
+                                <input type="text" class="form-control" name="token" id="token"
+                                       value="{{$channel->token}}">
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <label for="name">Ссылка на канал( необязательно )</label>
-                            <input type="text" class="form-control" name="link" id="link" value="{{$channel->link}}">
-                        </div>
-                        <div class="col-md-12">
-                            @if(!$sourceForChannel)
-                                Источников пока нет, вы можете их добавить.<br>
-                            @else
-                                <label>Источники :</label>
-                                <br>
 
-                                @foreach($sourceForChannel as $key=>$sourceForChannel1)
-                                    @if($key == $channel->name)
-                                        @foreach($sourceForChannel1 as $source)
-                                            <b>{{$source}}</b>
-                                            <a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"
-                                                                  class="btn btn-danger btn-sm">удалить
-                                            </a>
-                                            <br/>
-                                        @endforeach
-                                    @endif
-                                @endforeach
-                            @endif
-
-                        </div>
                         {{--<div class="col-md-12">--}}
                         {{--<label for="name">Тип доступа</label>--}}
                         {{--<br/>--}}
@@ -56,26 +45,68 @@
                 </form>
             </div>
         </div>
+        <br/>
         @if($channel->id)
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <form action="{{ route('update_source', ['channel_id' => $channel->id,'id'=>$channel->user_id]) }}"
-                          method="post">
-                        {{ csrf_field() }}
-                        <div class="panel-body">
+            <div class="card ">
+                <div class="card-header text-center">
+                    <h4>Источники для канала</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
 
-                            <label for="name">Добавить источник </label>
-                            <input type="text" class="form-control" name="source" id="source">
+                        <form action="{{ route('update_source', ['channel_id' => $channel->id,'id'=>$channel->user_id]) }}"
+                              method="post">
+                            {{ csrf_field() }}
+                            <div class="panel-body">
 
-                            <div class="col-md-12" style="margin-top: 10px">
-                                <button class="btn btn-success">Добавить источник</button>
+                                <label for="name">Добавить источник </label>
+                                <input type="text" class="form-control" name="source" id="source">
+
+                                <div class="col-md-12" style="margin-top: 10px">
+                                    <button class="btn btn-success">Добавить источник</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    @if(!$sourceForChannel)
+                        Источников пока нет, вы можете их добавить.<br>
+                    @else
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-condensed table-striped table-sm ">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Название</th>
+                                                <th>Опции</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($sourceForChannel as $key=>$sourceForChannel1)
+                                                @foreach($sourceForChannel1 as $source)
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$source}}</td>
+                                                        <td>
+                                                            <a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"
+                                                               class="btn btn-danger btn-sm">удалить
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    @endif
                 </div>
             </div>
         @endif
     </div>
+
 @endsection
 
 
