@@ -52,14 +52,21 @@
                 <div class="card-body">
                     <div class="form-group">
 
-                        <!--форма добавления источника-->
-                        <form action="{{ route('update_source', ['channel_id' => $channel->id,'id'=>$channel->user_id]) }}"
+                        <form action="{{ route('update_source', ['channel_id' => $channel->id]) }}"
                               method="post">
                             {{ csrf_field() }}
                             <div class="panel-body">
-
+                                <!-- TODO:саня -->
+                                <!--
+                                 короче, тут по нажатию кнопки добавить должна открываться модалка,
+                                 и в нее прикрутить аякс, обратить внимание,
+                                 что id модалок не должны повторяться,
+                                 а после отправки эту модалку надо очищать
+                                -->
                                 <label for="name">Добавить источник </label>
-                                <input type="text" class="form-control" name="source" id="source">
+                                <input type="text" class="form-control" name="link" id="add_link_group">
+                                <input type="text" class="form-control" name="owner" id="add_link_group">
+                                <input type="text" class="form-control" name="name" id="add_link_group">
 
                                 <div class="col-md-12" style="margin-top: 10px">
                                     <button class="btn btn-success">Добавить источник</button>

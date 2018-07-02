@@ -17,7 +17,17 @@ class CreateSourcesTable extends Migration
             $table->increments('id');
             $table->integer('channel_id');
             $table->integer('user_id');
-            $table->text('source');
+            $table->text('link');
+            $table->text('owner');
+            $table->text('name');
+
+            $table->boolean('images');
+            $table->boolean('video');
+            $table->boolean('gif');
+            $table->boolean('text');
+            $table->boolean('article');
+
+
             $table->timestamps();
         });
     }

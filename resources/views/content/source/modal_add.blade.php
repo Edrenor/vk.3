@@ -4,19 +4,19 @@
  * Date: 01.07.2018
  * Time: 20:21
  */ ?>
-<div class="modal" id="settings_source_1">
+<div class="modal" id="settings_source_{{$source->id}}">
     <div class="modal-dialog" style="    width: 795px;max-width: 795px;">
         <div class="modal-content">
             <! --Modal Header-->
             <div class="modal-header">
-                <h4 class="modal-title"> Настройки канала {{$source}}</h4>
+                <h4 class="modal-title"> Настройки канала {{$source->name}}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <form action="#добавить_роут_вида-route('update_source', ['id' => $source->id])" method="post">
+                    <form action="{{route('update_source', ['channel_id' => $channel_id,'id' => $source->id])}}" method="post">
                         <div class="panel-body">
                             {{csrf_field()}}
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -24,58 +24,75 @@
                                     <a class="nav-link disabled">Тип доступа</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                       aria-controls="home" aria-selected="true">Открытый</a>
+                                    <a class="nav-link active" id="public-tab" data-toggle="tab" href="#public"
+                                       role="tab"
+                                       aria-controls="public" aria-selected="true">Открытый</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                       aria-controls="profile" aria-selected="false">Токен группы</a>
+                                    <a class="nav-link" id="callback-tab" data-toggle="tab" href="#callback" role="tab"
+                                       aria-controls="callback" aria-selected="false">Callback</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                                       aria-controls="contact" aria-selected="false">Токен приложения</a>
+                                    <a class="nav-link" id="private-tab" data-toggle="tab" href="#private" role="tab"
+                                       aria-controls="private" aria-selected="false">Токен приложения(для закрытых
+                                                                                     групп)</a>
                                 </li>
                             </ul>
-                            <div class="tab-content clearfix" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                     aria-labelledby="home-tab">
+                            <div class="tab-content " id="myTabContent">
+                                <div class="tab-pane fade show active" id="public" role="tabpanel"
+                                     aria-labelledby="public-tab">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <label for="name" class=" col-form-label">Ссылка на группу вк</label>
-                                            <input type="text" class="form-control" name="name" id="name"
-                                                   value="$source->name">
+                                        <div class="form-group col-sm-10">
+                                            <label for="link_group" class=" col-form-label">Ссылка на группу
+                                                                                            вк</label>
+                                            <input type="text" class="form-control" name="link" id="link_group"
+                                                   value="{{$source->link}}">
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="link" class="col-form-label">Ссылка на канал( необязательно
-                                                                                     )</label>
-                                            <input type="text" class="form-control" name="link" id="link"
-                                                   value="$source->link">
+                                        <div class="form-group col-sm-2">
+                                            {{--<label for="link_group" class=" col-form-label">(?)</label>--}}
+                                            <button type="button" class="btn btn-success btn-sm" style="margin-top: 40px">check</button>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-sm-12">
-                                            <label for="token" class="col-form-label">Токен бота телеграмм</label>
-                                            <input type="text" class="form-control" name="token" id="token"
-                                                   value="$source->token">
+                                        <!-- TODO: саня -->
+                                        <!-- короче их сделать readonly, и после нажатия кнопки check которая выше она ебашит аякс, который парсит страницу группы и заполняет вот эти поля, ок да?! -->
+                                        <div class="form-group col-sm-6">
+                                            <label for="name_group" class="col-form-label">Название группы</label>
+                                            <input type="text" class="form-control"  name="name" id="name_group"
+                                                   value="{{$source->name}}">
                                         </div>
+                                        <div class="form-group col-sm-6">
+                                            <label for="owner_group" class="col-form-label">Id Группы</label>
+                                            <input type="text" class="form-control"  name="owner"
+                                                   id="owner_group"
+                                                   value="{{$source->owner}}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- TODO:саня -->
+                                        <!-- типа настройки тут будут (короче тут чекбоксы надо заебашить, саня, ебись) -->
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                Недоступно
-                            </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                Недоступно
+                                <div class="tab-pane fade" id="callback" role="tabpanel" aria-labelledby="callback-tab">
+                                    Тип доступа "Callback" недоступен
+                                </div>
+                                <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
+                                    Тип доступа "Токен приложения(для закрытых групп)" недоступен
+                                </div>
                             </div>
                         </div>
+
+                        <button class="btn btn-success" >Сохранить(короче тут должен быть аякс, саня, ебись, мне лень)</button> <!-- TODO:саня -->
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+
                     </form>
                 </div>
             </div>
             <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Сохранить</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
-            </div>
+            {{--<div class="modal-footer">--}}
+                {{--<button type="button" class="btn btn-success" data-dismiss="modal">Сохранить(короче тут должен быть аякс, саня, ебись, мне лень)</button> <!-- TODO:саня -->--}}
+                {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>--}}
+            {{--</div>--}}
         </div>
     </div>
 </div>
