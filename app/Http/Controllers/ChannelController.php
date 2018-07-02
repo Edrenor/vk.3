@@ -30,12 +30,8 @@ class ChannelController extends Controller
      */
     public function index($id = null)
     {
-        $channel = $this->dispatch(new ChannelFindOrNewById($id));
-        $sourceForChannel = [];
-        $sources = $this->dispatch(new SourceListByUserIdChannelId(Auth::id(), $channel->id));
-        foreach ($sources as $source) {
-            $sourceForChannel[$channel->name][] = $source->source;
-        }
+        $channel          = $this->dispatch(new ChannelFindOrNewById($id));
+        $sourceForChannel = $this->dispatch(new SourceListByUserIdChannelId(Auth::id(), $channel->id));
 
         return view('content.channel.add', compact('channel', 'sourceForChannel'));
     }

@@ -46,13 +46,21 @@
                 <div class="card-body">
                     <div class="form-group">
 
-                        <form action="{{ route('update_source', ['channel_id' => $channel->id,'id'=>$channel->user_id]) }}"
+                        <form action="{{ route('update_source', ['channel_id' => $channel->id]) }}"
                               method="post">
                             {{ csrf_field() }}
                             <div class="panel-body">
-
+                                <!-- TODO:саня -->
+                                <!--
+                                 короче, тут по нажатию кнопки добавить должна открываться модалка,
+                                 и в нее прикрутить аякс, обратить внимание,
+                                 что id модалок не должны повторяться,
+                                 а после отправки эту модалку надо очищать
+                                -->
                                 <label for="name">Добавить источник </label>
-                                <input type="text" class="form-control" name="source" id="source">
+                                <input type="text" class="form-control" name="link" id="add_link_group">
+                                <input type="text" class="form-control" name="owner" id="add_link_group">
+                                <input type="text" class="form-control" name="name" id="add_link_group">
 
                                 <div class="col-md-12" style="margin-top: 10px">
                                     <button class="btn btn-success">Добавить источник</button>
@@ -71,28 +79,25 @@
                                             <tr>
                                                 <th>№</th>
                                                 <th>Название</th>
-                                                <th>Опции</th>
+                                                <th style="width: 50px;">Опции</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($sourceForChannel as $key=>$sourceForChannel1)
-                                                @foreach($sourceForChannel1 as $source)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$source}}</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settings_source_1">
-                                                                Настроить
-                                                            </button>
-                                                            @include('content.source.modal_add')
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"
-                                                               class="btn btn-danger btn-sm">удалить
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            @foreach($sourceForChannel as $key=>$source)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td><a href="{{$source->link}}">{{$source->name}}</a></td>
+                                                    <td class="float-right">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settings_source_{{$source->id}}">
+                                                            Настроить
+                                                        </button>
+                                                        <br>
+                                                        @include('content.source.modal_add', ['source' => $source, 'channel_id' => $channel->id])
+                                                        <a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"
+                                                           class="btn btn-danger btn-sm">удалить
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
