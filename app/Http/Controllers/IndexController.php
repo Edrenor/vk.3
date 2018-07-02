@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Material\Queries\MaterialListByPosId;
 use App\Domain\Post\Commands\PostCreateCommand;
 use App\Domain\Post\Queries\PostByPosIdAndOwnerIdQuery;
+use App\Domain\Source\Queries\SourceListByUserIdChannelId;
 use App\Domain\StopWord\Queries\StopWordsByOwnersId;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,12 +41,12 @@ class IndexController extends Controller
      * @var array
      */
     var $domains = [
-        'bestad',
-        'igm',
-        'igromania',
-        'vinevinevine',
-        'leprum',
-        'mudakoff',
+//        'bestad',
+//        'igm',
+//        'igromania',
+//        'vinevinevine',
+//        'leprum',
+//        'mudakoff',
     ];   // 'videosos', 'vinevinevine', 'bestad', 'igm','mrzlk', 'countryballs_re', 'leprum', 'mudakoff',
 
     /**
@@ -53,8 +54,6 @@ class IndexController extends Controller
      */
     public function __construct()
     {
-        $this->TelegramToken = getenv('TelegramToken');
-        $this->token = getenv('VkToken');
         $this->apiVersion = getenv('ApiVkVersion');
     }
 
@@ -94,21 +93,21 @@ class IndexController extends Controller
 
         foreach ($this->domains as $domain) {
             $response = $this->getInfo("wall.get", "domain=$domain&count=$this->count");
-            if(! isset($response["response"]["items"])){
+            if ( ! isset($response["response"]["items"])) {
                 dd($response);
             }
             foreach ($response["response"]["items"] as $items) {
 
                 if ($this->postValidation($items)) {
-//                    echo 'Пост подходит<br>';
-                    $array = [];
+                    $array                = [];
                     $array["attachments"] = [];
 
-                    $array['date'] = date('Y-m-d H:i:s', $items["date"]);
-                    $array['post_id'] = $items["id"];
+                    $array['date']     = date('Y-m-d H:i:s', $items["date"]);
+                    $array['post_id']  = $items["id"];
                     $array['owner_id'] = $items["owner_id"];
-                    $array['text'] = $items['text'];
-                    $post = $this->dispatch(new PostByPosIdAndOwnerIdQuery($array['post_id'], $array['owner_id']));
+                    $array['text']     = $items['text'];
+                    $post              =
+                        $this->dispatch(new PostByPosIdAndOwnerIdQuery($array['post_id'], $array['owner_id']));
                     if ($post == null) {
                         foreach ($items["attachments"] as $attachments) {
                             $attachment = null;
@@ -118,7 +117,6 @@ class IndexController extends Controller
                                     break;
                                 case "video":
                                     $attachment = $this->videoAttachment($attachments);
-//                                    dump($attachment);
                                     sleep(1);
                                     break;
                                 case "doc":
@@ -139,84 +137,64 @@ class IndexController extends Controller
                         );
 
                         $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
-                    }
-                    else {
+                    } else {
                         $outputArray[date('Y-m-d H:i:s', $items["date"])] = $this->output($array);
                     }
                 }
-//                else {
-//                    echo 'Пост не подходит<br>';
-//                    dump($items);
-//                }
             }
         }
         krsort($outputArray);
-//        dump($outputArray);
+
         return $outputArray;
     }
 
     public function postValidation($post)
     {
-//        dump($post);
         $stopWordsCollection = $this->dispatch(new StopWordsByOwnersId($post["owner_id"]));
-//        dump($stopWordsCollection);
-        if ( !empty($stopWordsCollection) ) {
+        if ( ! empty($stopWordsCollection)) {
             echo empty($stopWordsCollection);
             $stopWordsArray = unserialize($stopWordsCollection->stopWords);
             foreach ($stopWordsArray as $stopWord) {
                 if (stripos($post['text'], $stopWord)) {
-//                    echo 'stopWord in the text';
-                }
-                else {
-                    if($this->postScreening($post)){
+                } else {
+                    if ($this->postScreening($post)) {
                         return true;
                     }
                 }
             }
-        }
-        else {
-//            echo 'no stopWordCollection';
-            if($this->postScreening($post)){
+        } else {
+            if ($this->postScreening($post)) {
                 return true;
             }
         }
-
     }
 
-    public function postScreening($post){
+    public function postScreening($post)
+    {
         if (array_key_exists("attachments", $post)) {
             if ($post["date"] >= date('U') - 86400) {
                 foreach ($post['attachments'] as $attachment) {
-                    if (!array_key_exists("link", $attachment)) {
+                    if ( ! array_key_exists("link", $attachment)) {
                         return true;
                     }
-//                    else {
-//                        echo 'link in attachment';
-//                    }
                 }
             }
-//            else {
-//                echo 'wrong date';
-//            }
         }
-//        else {
-//            echo 'no attachments in the post';
-//        }
     }
 
     public function photoAttachment($item)
     {
         $subArray["type"] = "photo";
-        $subArray["url"] = $item["photo"]["photo_604"];
+        $subArray["url"]  = $item["photo"]["photo_604"];
 
         return $subArray;
     }
 
     public function docAttachment($item)
     {
-        $subArray = [];
+        $subArray         = [];
         $subArray["type"] = "doc";
-        $subArray["url"] = $item["doc"]["url"];
+        $subArray["url"]  = $item["doc"]["url"];
 
         return $subArray;
     }
@@ -227,16 +205,14 @@ class IndexController extends Controller
             'owner_id=' . $item['video']['owner_id'] . '&videos=' . $item['video']['owner_id'] . '_'
             . $item['video']['id'] . ''
         );
-//        dump($videoResponse);
-
 
         if (array_key_exists("response", $videoResponse)) {
-            $subArray = [];
+            $subArray         = [];
             $subArray["type"] = "video";
-            $subArray["url"] = $videoResponse["response"]["items"]["0"]["player"];
+            $subArray["url"]  = $videoResponse["response"]["items"]["0"]["player"];
+
             return $subArray;
         }
-
     }
 
     /** СОЗДАНИЕ МАССИВА ИЗ ВЛОЖЕНИЙ
@@ -248,19 +224,19 @@ class IndexController extends Controller
     function output($item)
     {
         $outputArray = [];
-        $post_info = $this->dispatch(new PostByPosIdAndOwnerIdQuery($item['post_id'], $item['owner_id']));
+        $post_info   = $this->dispatch(new PostByPosIdAndOwnerIdQuery($item['post_id'], $item['owner_id']));
 
-        $outputArray['date'] = $post_info->created_at;
-        $outputArray['id'] = $post_info->id;
+        $outputArray['date']  = $post_info->created_at;
+        $outputArray['id']    = $post_info->id;
         $outputArray['owner'] = $post_info->owner_id;
-        $outputArray['text'] = $post_info->text;
+        $outputArray['text']  = $post_info->text;
 
         $info = $this->dispatch(new MaterialListByPosId($post_info->id));
-//        dump($info);
+
         foreach ($info as $array) {
-            $subArray = [];
-            $subArray['type'] = $array->type;
-            $subArray['url'] = $array->link;
+            $subArray                     = [];
+            $subArray['type']             = $array->type;
+            $subArray['url']              = $array->link;
             $outputArray["attachments"][] = $subArray;
         }
 
@@ -288,8 +264,12 @@ class IndexController extends Controller
      *
      * @return $this
      */
-    public function index()
+    public function index($channel_id)
     {
+        $this->domains       = $this->dispatch(new SourceListByUserIdChannelId(null, $channel_id))->pluck('source')->toArray();
+        $this->TelegramToken = getenv('TelegramToken');
+        $this->token         = getenv('VkToken');
+
         $array = $this->getArray();
 
         return view('entryPoint', compact('array'));

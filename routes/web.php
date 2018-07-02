@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('/', 'BasicController@index');
 
-Route::get('/getPosts', 'IndexController@index');
+//Route::get('/getPosts', 'IndexController@index');
 
 Route::get('/post/{id}', 'SaveController@save')->name('postSave');
 
@@ -25,6 +25,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/channel/{id?}/', 'ChannelController@index')->name('channel');
+    Route::get('/channel/{id}/posts', 'IndexController@index')->name('channel_post');
 
     Route::post('/source/{channel_id}/{id?}', 'SourceController@update')->name('update_source');
 
