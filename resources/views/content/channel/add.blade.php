@@ -92,32 +92,27 @@
                                         </thead>
                                         <tbody>
                                         @foreach($sourceForChannel as $key=>$sourceForChannel1)
-                                            @foreach($sourceForChannel1 as $source)
-                                                <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$source}}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                                data-toggle="modal" data-target="#settings_source_1">
-                                                            Настроить
-                                                        </button>
-                                                        @include('content.source.modal_add')
-                                                    </td>
-                                                    <td>
-                                                        <form method="post"
-                                                              action="{{ route('delete_source', ['source' => $source,'channel_id' => $channel->id] ) }}">
-                                                            {{csrf_field()}}
-                                                            <input name="_method" type="hidden" value="DELETE">
-                                                            <input class="btn btn-danger" type="submit"
-                                                                   value="Удалить"/>
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$sourceForChannel1->name}}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary"
+                                                            data-toggle="modal" data-target="#settings_source_1">
+                                                        Настроить
+                                                    </button>
+                                                    {{--@include('content.source.modal_add')--}}
+                                                </td>
+                                                <td>
+                                                    <form method="post"
+                                                          action="{{ route('delete_source', ['source' => $sourceForChannel1->id,'channel_id' => $channel->id] ) }}">
+                                                        {{csrf_field()}}
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                        <input class="btn btn-danger" type="submit"
+                                                               value="Удалить"/>
 
-                                                        </form>
-                                                        {{--<a href="{{route('delete_source', ['source_id' => '33','channel_id' => $channel->id] ) }}"--}}
-                                                        {{--class="btn btn-danger btn-sm">удалить--}}
-                                                        {{--</a>--}}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                         </tbody>
                                     </table>

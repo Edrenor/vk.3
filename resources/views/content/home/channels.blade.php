@@ -26,7 +26,7 @@
                                         @foreach($sourcesForChannels as $key=>$sourcesForChannel)
                                             @if($key == $channelTg->name)
                                                 @foreach($sourcesForChannel as $source)
-                                                    {{$source}}
+                                                    {{$source->name}}
                                                     <br/>
                                                 @endforeach
                                             @endif

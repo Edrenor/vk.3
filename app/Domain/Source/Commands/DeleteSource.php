@@ -17,11 +17,11 @@ class DeleteSource extends Job
 
     use DispatchesJobs;
 
-    private $source;
+    private $id;
 
-    public function __construct($source)
+    public function __construct($source_id)
     {
-        $this->source = $source;
+        $this->id = $source_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class DeleteSource extends Job
      */
     public function handle()
     {
-        Source::whereSource($this->source)->delete();
+        Source::whereId($this->id)->delete();
     }
 
 }
