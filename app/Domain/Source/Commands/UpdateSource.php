@@ -63,6 +63,10 @@ class UpdateSource extends Job
      * @var bool
      */
     private $text;
+    /**
+     * @var bool
+     */
+    private $article;
 
     /**
      * UpdateSource constructor.
@@ -115,7 +119,7 @@ class UpdateSource extends Job
         } else {
             $source = new Source();
         }
-
+        dump($this->channel_id);
         $source->channel_id = $this->channel_id;
         $source->user_id    = $this->user_id;
         $source->link       = $this->link;

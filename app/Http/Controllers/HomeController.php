@@ -31,7 +31,7 @@ class HomeController extends Controller
         foreach ($channelsTg as $channelTg){
             $sources = $this->dispatch(new SourceListByUserIdChannelId( Auth::id(), $channelTg->id) );
             foreach ($sources as $source){
-                $sourcesForChannels[$channelTg->name][] = $source->source;
+                $sourcesForChannels[$channelTg->name][] = $source;
             }
 
         }
