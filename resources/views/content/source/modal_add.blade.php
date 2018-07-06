@@ -4,19 +4,19 @@
  * Date: 01.07.2018
  * Time: 20:21
  */ ?>
-<div class="modal" id="settings_source_{{$source->id}}">
+<div class="modal" id="settings_source_{{$sourceForChannel1->id}}">
     <div class="modal-dialog" style="    width: 795px;max-width: 795px;">
         <div class="modal-content">
             <! --Modal Header-->
             <div class="modal-header">
-                <h4 class="modal-title"> Настройки канала {{$source->name}}</h4>
+                <h4 class="modal-title"> Настройки канала {{$sourceForChannel1->name}}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <form action="{{route('update_source', ['channel_id' => $channel_id,'id' => $source->id])}}" method="post">
+                    <form action="{{route('update_source', ['channel_id' => $channel->id,'id' => $sourceForChannel1->id])}}" method="post">
                         <div class="panel-body">
                             {{csrf_field()}}
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -46,7 +46,7 @@
                                             <label for="link_group" class=" col-form-label">Ссылка на группу
                                                                                             вк</label>
                                             <input type="text" class="form-control" name="link" id="link_group"
-                                                   value="{{$source->link}}">
+                                                   value="{{$sourceForChannel1->link}}">
                                         </div>
                                         <div class="form-group col-sm-2">
                                             {{--<label for="link_group" class=" col-form-label">(?)</label>--}}
@@ -59,13 +59,13 @@
                                         <div class="form-group col-sm-6">
                                             <label for="name_group" class="col-form-label">Название группы</label>
                                             <input type="text" class="form-control"  name="name" id="name_group"
-                                                   value="{{$source->name}}">
+                                                   value="{{$sourceForChannel1->name}}">
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="owner_group" class="col-form-label">Id Группы</label>
                                             <input type="text" class="form-control"  name="owner"
                                                    id="owner_group"
-                                                   value="{{$source->owner}}">
+                                                   value="{{$sourceForChannel1->owner}}">
                                         </div>
                                     </div>
                                     <div class="row">
