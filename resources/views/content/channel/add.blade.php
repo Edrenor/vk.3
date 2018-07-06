@@ -100,7 +100,7 @@
                                                             data-toggle="modal" data-target="#settings_source_1">
                                                         Настроить
                                                     </button>
-                                                    {{--@include('content.source.modal_add')--}}
+                                                    @include('content.source.modal_add')
                                                 </td>
                                                 <td>
                                                     <form method="post"
